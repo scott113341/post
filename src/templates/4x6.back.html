@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <title>Lob.com Sample 4x6 Postcard Back</title>
+    <style>
+      *, *:before, *:after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 6.25in;
+        height: 4.25in;
+        margin: 0;
+        padding: 0;
+        /* If using an image, the background image should have dimensions of 1875x1275 pixels. */
+        background-image: url(https://s3-us-west-2.amazonaws.com/lob-assets/beach.jpg);
+        background-size: 6.25in 4.25in;
+        background-repeat: no-repeat;
+      }
+
+      #safe-area {
+        position: absolute;
+        width: 5.875in;
+        height: 3.875in;
+        left: 0.1875in;
+        top: 0.1875in;
+        background-color: rgba(255,255,255,0.5);
+      }
+
+      #ink-free {
+        position: absolute;
+        width: 3.5in;
+        height: 2.7in;
+        right: -0.1875in;
+        bottom: -0.1875in;
+        background-color: white;
+      }
+
+      .text {
+        margin: 10px;
+        width: 200px;
+        font-family: 'Open Sans';
+        font-weight: 400;
+        font-size: 20px;
+        color: white;
+        text-shadow: 2px 2px black;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="safe-area">
+      <!-- All text should appear without the safe area. -->
+      <div class="text">
+        The frosted white box denotes the safe area to place text. The solid white box denotes the ink-free area which must be left blank. If you are using the data argument, you can add variables like this: {{variable_name}}.
+      </div>
+      <div id="ink-free">
+        <!-- Do not place any artwork or text in the ink free area. Address and postage will be automatically printed here. Delete this div before submitting your postcard! -->
+      </div>
+    </div>
+  </body>
+
+</html>
