@@ -25,7 +25,7 @@ export default class ImageStep extends React.Component {
   }
 
   isValid() {
-    return this.props.postcard.image.data.indexOf('data:image/jpeg;base64') === 0;
+    return this.props.postcard.image.data.indexOf('data:image') === 0;
   }
 
   handleImageLoad(e) {

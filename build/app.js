@@ -40815,7 +40815,7 @@ var ImageStep = function (_React$Component) {
   }, {
     key: 'isValid',
     value: function isValid() {
-      return this.props.postcard.image.data.indexOf('data:image/jpeg;base64') === 0;
+      return this.props.postcard.image.data.indexOf('data:image') === 0;
     }
   }, {
     key: 'handleImageLoad',
