@@ -2,7 +2,7 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Button, Input, Step } from '../components';
+import { Button, Input, Spacer, Step } from '../components';
 
 
 export default class LobStep extends React.Component {
@@ -13,9 +13,11 @@ export default class LobStep extends React.Component {
 
     return r(Step, { title: 'lob account' },
       r('p', null, 'enter your lob api key'),
+
       r(Input, { value: apiKey, onChange: this.handleInputChange.bind(this) }),
-      r('br'),
-      r('br'),
+
+      r(Spacer),
+      r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
       r(Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled })
     );
   }
@@ -28,8 +30,13 @@ export default class LobStep extends React.Component {
     this.props.actions.editInput({ lob: { apiKey: value }});
   }
 
+  handlePreviousClick() {
+    this.props.actions.previousStep();
+  }
+
   handleNextClick() {
-    if (this.isValid()) this.props.actions.nextStep();
+    this.props.actions.persistLobApiKey(this.props.postcard.lob.apiKey);
+    this.props.actions.nextStep();
   }
 
 }

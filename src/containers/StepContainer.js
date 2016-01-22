@@ -7,7 +7,6 @@ import csjs from 'csjs';
 import * as PostcardActions from '../actions/postcard';
 
 import * as steps from '../steps';
-import container from '../styles/container';
 
 
 class StepContainer extends React.Component {
@@ -38,13 +37,14 @@ const stepOrder = [
   'FromAddressStep',
   'ToAddressStep',
   'PreviewStep',
+  'SendStep',
 ];
 
 
 const styles = csjs`
 
   .stepContainer {
-    margin: 3px 3px 0;
+    margin: 3px 6px 0;
   }
 
 `;

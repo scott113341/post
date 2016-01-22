@@ -30,7 +30,8 @@ const styles = csjs`
 
   .title {
     margin: 10px 0;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 200;
   }
 
 `;

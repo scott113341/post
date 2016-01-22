@@ -2,7 +2,7 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Button, Input, Step } from '../components';
+import { Button, Input, Spacer, Step } from '../components';
 import { formatPrice } from '../util';
 
 
@@ -14,18 +14,12 @@ export default class ImageStep extends React.Component {
 
     const img = image.data.length ? r('img', { className: styles.image, src: image.data }) : null;
 
-    return r(Step, { title: 'choose photo' },
-      r('p', null, 'choose a photo'),
-
-      r('input', { type: 'file', accept: 'image/jpeg', onChange: this.handleImageLoad.bind(this) }),
-
-      r('br'),
-      r('br'),
-
+    return r(Step, { title: 'choose a photo' },
+      r('input', { type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }),
       img,
 
-      r('br'),
-      r('br'),
+      r(Spacer),
+      r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
       r(Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled })
     );
   }
@@ -44,8 +38,12 @@ export default class ImageStep extends React.Component {
     };
   }
 
+  handlePreviousClick() {
+    this.props.actions.previousStep();
+  }
+
   handleNextClick() {
-    if (this.isValid()) this.props.actions.nextStep();
+    this.props.actions.nextStep();
   }
 
 }

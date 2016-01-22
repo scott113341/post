@@ -26,12 +26,13 @@ export default class Button extends React.Component {
 const styles = csjs`
 
   .button {
+    margin: 0 4px;
     border: none;
+    padding: 3px 12px;
     background: cadetblue;
     color: white;
     font-size: 18px;
     font-weight: 300;
-    padding: 3px 12px;
   }
 
   .button:disabled {

@@ -2,7 +2,7 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Cell, Button, Input, Modal, Step } from '../components';
+import { Cell, Button, Input, Modal, Spacer, Step } from '../components';
 
 
 export default class FromAddressStep extends React.Component {
@@ -19,20 +19,24 @@ export default class FromAddressStep extends React.Component {
       r('input', { className: styles.modalInput, ref: 'addressState', placeholder: 'state' }),
       r('input', { className: styles.modalInput, ref: 'addressZip', placeholder: 'zip', type: 'number' }),
 
-      r('br'),
-      r('br'),
-      r(Button, { text: 'save', onClick: this.handleClickSaveNewAddress.bind(this) }),
-      r('span', null, ' '),
-      r(Button, { text: 'cancel', onClick: this.handleClickCancelNewAddress.bind(this) })
+      r(Spacer),
+      r(Button, { text: 'cancel', onClick: this.handleClickCancelNewAddress.bind(this) }),
+      r(Button, { text: 'save', onClick: this.handleClickSaveNewAddress.bind(this) })
     ) : null;
 
     return r(Step, { title: 'from address' },
 
       address.addresses.map((addressOption, index) => {
         const selected = index === address.selectedFromIndex;
+        const deleteButtonSpacer = selected ? r(Spacer, { height: '10px' }) : null;
+        const deleteButton = selected ? r('span', { onClick: this.handleDeleteAddress.bind(this, index) }, 'delete') : null;
         return r(Cell, { key: index, onClick: this.handleClickAddress.bind(this, index), selected },
           r('p', null, addressOption.addressName),
-          r('p', null, addressOption.addressLine1)
+          r('p', null, addressOption.addressLine1),
+          r('p', null, addressOption.addressLine2),
+          r('p', null, `${addressOption.addressCity}, ${addressOption.addressState} ${addressOption.addressZip}`),
+          deleteButtonSpacer,
+          deleteButton
         );
       }),
 
@@ -42,8 +46,8 @@ export default class FromAddressStep extends React.Component {
 
       modal,
 
-      r('br'),
-      r('br'),
+      r(Spacer),
+      r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
       r(Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled })
     );
   }
@@ -56,13 +60,18 @@ export default class FromAddressStep extends React.Component {
     this.props.actions.editInput({ address: { selectedFromIndex: index }});
   }
 
+  handleDeleteAddress(index, e) {
+    e.stopPropagation();
+    this.props.actions.deleteAddress(index);
+  }
+
   handleClickNewAddress() {
     this.props.actions.editInput({ address: { selectedFromIndex: -1 }});
     this.props.actions.editInput({ address: { showModal: true }});
   }
 
   handleClickSaveNewAddress() {
-    this.props.actions.addNewAddress({
+    const address = {
       addressName: this.refs.addressName.value,
       addressLine1: this.refs.addressLine1.value,
       addressLine2: this.refs.addressLine2.value,
@@ -70,19 +79,23 @@ export default class FromAddressStep extends React.Component {
       addressCity: this.refs.addressCity.value,
       addressState: this.refs.addressState.value,
       addressZip: this.refs.addressZip.value
-    });
+    };
+    this.props.actions.addNewAddress(address);
     const newAddressIndex = this.props.postcard.address.addresses.length - 1;
     this.props.actions.editInput({ address: { selectedFromIndex: newAddressIndex }});
     this.props.actions.editInput({ address: { showModal: false }});
   }
 
   handleClickCancelNewAddress() {
-    console.log('cancel');
     this.props.actions.editInput({ address: { showModal: false }});
   }
 
+  handlePreviousClick() {
+    this.props.actions.previousStep();
+  }
+
   handleNextClick() {
-    if (this.isValid()) this.props.actions.nextStep();
+    this.props.actions.nextStep();
   }
 
 }

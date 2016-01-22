@@ -15,12 +15,14 @@ const initialState = {
     sizes: [
       {
         name: '4x6',
+        display: '4"x6"',
         price: 0.70,
         width: 6.25,
         height: 4.25
       },
       {
         name: '6x11',
+        display: '6"x11"',
         price: 1.50,
         width: 11.25,
         height: 6.25
@@ -47,59 +49,62 @@ const initialState = {
     showModal: false,
     selectedToIndex: -1,
     selectedFromIndex: -1,
-    addresses: getFromLocalStorage('ADDRESSES', [
-      {
-        addressName: 'Scott Hardy',
-        addressLine1: '1347 23rd Avenue',
-        addressLine2: 'Apt. 1337',
-        addressCountry: 'US',
-        addressCity: 'San Francisco',
-        addressState: 'CA',
-        addressZip: '94122'
-      },
-      {
-        addressName: 'Donna Hardy',
-        addressLine1: '4076 Pebble Beach Drive',
-        addressLine2: '',
-        addressCountry: 'US',
-        addressCity: 'Longmont',
-        addressState: 'CO',
-        addressZip: '80503'
-      }
-    ])
+    addresses: getFromLocalStorage('ADDRESSES', [])
   },
   preview: {
     side: 'front',
     frontData: '',
     backData: ''
+  },
+  send: {
+    isSending: false,
+    didSend: false,
+    response: ''
   }
 };
 
 
 export default function postcard(state=initialState, action) {
   switch (action.type) {
-    case ACTIONS.NEXT_STEP:
-      const stepIndex = state.stepIndex + 1;
+    case ACTIONS.GO_TO_STEP:
+      var stepIndex = state.stepIndex;
+      if (action.step === 'next') stepIndex++;
+      if (action.step === 'previous') stepIndex++;
+      else stepIndex = action.step;
       return clone(state, { stepIndex });
+
+    case ACTIONS.NEXT_STEP:
+      var stepIndex = state.stepIndex + 1;
+      return clone(state, { stepIndex });
+
+    case ACTIONS.PREVIOUS_STEP:
+      var stepIndex = state.stepIndex - 1;
+      return clone(state, { stepIndex });
+
+    case ACTIONS.PERSIST_LOB_API_KEY:
+      localStorage.setItem('LOB_API_KEY', action.apiKey);
+      return state;
 
     case ACTIONS.EDIT_INPUT:
       return _.merge({}, state, action.value);
 
     case ACTIONS.ADD_NEW_ADDRESS:
-      const addresses = [].concat(state.address.addresses, action.address);
+      var addresses = [].concat(state.address.addresses, action.address);
+      localStorage.setItem('ADDRESSES', JSON.stringify(addresses));
       return _.merge({}, state, { address: { addresses }});
+
+    case ACTIONS.DELETE_ADDRESS:
+      var addresses = [].concat(state.address.addresses);
+      addresses.splice(action.index, 1);
+      localStorage.setItem('ADDRESSES', JSON.stringify(addresses));
+      return _.merge(
+        {},
+        state,
+        { address: { addresses: null }},
+        { address: { addresses }, selectedToIndex: -1 }
+      );
 
     default:
       return state;
   }
-}
-
-
-export function propsForHTML(preview) {
-  var props = {};
-}
-
-
-export function selectedSize() {
-
 }

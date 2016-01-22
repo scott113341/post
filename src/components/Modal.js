@@ -52,6 +52,7 @@ const styles = csjs`
     padding: 10px;
     width: 90%;
     background: white;
+    pointer-events: all;
   }
 
   .title {

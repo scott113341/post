@@ -2,8 +2,9 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Button, Input, Step } from '../components';
+import { Button, Input, Spacer, Step } from '../components';
 import { formatPrice } from '../util';
+import globalStyles from '../styles/global';
 
 
 export default class SizeStep extends React.Component {
@@ -13,18 +14,16 @@ export default class SizeStep extends React.Component {
     const disabled = !this.isValid();
 
     return r(Step, { title: 'postcard size' },
-      r('p', null, 'choose an option'),
-
       r('select', { value: size.selectedIndex, onChange: this.handleSelectChange.bind(this) },
         size.sizes.map((sizeOption, index) => {
           return r('option', { key: index, value: index },
-            `${sizeOption.name} - ${formatPrice(sizeOption.price)}`
+            `${sizeOption.display} - ${formatPrice(sizeOption.price)}`
           );
         })
       ),
 
-      r('br'),
-      r('br'),
+      r(Spacer),
+      r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
       r(Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled })
     );
   }
@@ -34,12 +33,15 @@ export default class SizeStep extends React.Component {
   }
 
   handleSelectChange(e) {
-    console.log(e);
     this.props.actions.editInput({ size: { selectedIndex: e.target.value }});
   }
 
+  handlePreviousClick() {
+    this.props.actions.previousStep();
+  }
+
   handleNextClick() {
-    if (this.isValid()) this.props.actions.nextStep();
+    this.props.actions.nextStep();
   }
 
 }

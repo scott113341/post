@@ -2,7 +2,7 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Cell, Button, Input, Modal, Step } from '../components';
+import { Cell, Button, Input, Modal, Spacer, Step } from '../components';
 
 
 export default class ToAddressStep extends React.Component {
@@ -19,11 +19,9 @@ export default class ToAddressStep extends React.Component {
       r('input', { className: styles.modalInput, ref: 'addressState', placeholder: 'state' }),
       r('input', { className: styles.modalInput, ref: 'addressZip', placeholder: 'zip', type: 'number' }),
 
-      r('br'),
-      r('br'),
-      r(Button, { text: 'save', onClick: this.handleClickSaveNewAddress.bind(this) }),
-      r('span', null, ' '),
-      r(Button, { text: 'cancel', onClick: this.handleClickCancelNewAddress.bind(this) })
+      r(Spacer),
+      r(Button, { text: 'cancel', onClick: this.handleClickCancelNewAddress.bind(this) }),
+      r(Button, { text: 'save', onClick: this.handleClickSaveNewAddress.bind(this) })
     ) : null;
 
     return r(Step, { title: 'to address' },
@@ -32,7 +30,9 @@ export default class ToAddressStep extends React.Component {
         const selected = index === address.selectedToIndex;
         return r(Cell, { key: index, onClick: this.handleClickAddress.bind(this, index), selected },
           r('p', null, addressOption.addressName),
-          r('p', null, addressOption.addressLine1)
+          r('p', null, addressOption.addressLine1),
+          r('p', null, addressOption.addressLine2),
+          r('p', null, `${addressOption.addressCity}, ${addressOption.addressState} ${addressOption.addressZip}`)
         );
       }),
 
@@ -42,8 +42,8 @@ export default class ToAddressStep extends React.Component {
 
       modal,
 
-      r('br'),
-      r('br'),
+      r(Spacer),
+      r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
       r(Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled })
     );
   }
@@ -81,8 +81,12 @@ export default class ToAddressStep extends React.Component {
     this.props.actions.editInput({ address: { showModal: false }});
   }
 
+  handlePreviousClick() {
+    this.props.actions.previousStep();
+  }
+
   handleNextClick() {
-    if (this.isValid()) this.props.actions.nextStep();
+    this.props.actions.nextStep();
   }
 
 }

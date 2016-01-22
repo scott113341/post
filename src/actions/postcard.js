@@ -1,13 +1,23 @@
 import * as ACTIONS from './constants';
 
 
-export function changePreviewSide(side) {
-  return { type: ACTIONS.POSTCARD_CHANGE_PREVIEW_SIDE, side };
+export function goToStep(step) {
+  return { type: ACTIONS.GO_TO_STEP, step };
 }
 
 
 export function nextStep() {
   return { type: ACTIONS.NEXT_STEP };
+}
+
+
+export function previousStep() {
+  return { type: ACTIONS.PREVIOUS_STEP };
+}
+
+
+export function persistLobApiKey(apiKey) {
+  return { type: ACTIONS.PERSIST_LOB_API_KEY, apiKey };
 }
 
 
@@ -18,6 +28,11 @@ export function editInput(value) {
 
 export function addNewAddress(address) {
   return { type: ACTIONS.ADD_NEW_ADDRESS, address };
+}
+
+
+export function deleteAddress(index) {
+  return { type: ACTIONS.DELETE_ADDRESS, index };
 }
 
 
