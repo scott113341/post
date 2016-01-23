@@ -40765,7 +40765,7 @@ var styles = (0, _csjs2.default)(_templateObject);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n\n  .image {\n    max-width: 100%;\n    max-height: 300px;\n  }\n\n'], ['\n\n  .image {\n    max-width: 100%;\n    max-height: 300px;\n  }\n\n']);
+var _templateObject = _taggedTemplateLiteral(['\n\n  .input {\n    border: none;\n    width: 0.1px;\n    height: 0.1px;\n    opacity: 0;\n    overflow: hidden;\n    position: absolute;\n    z-index: -1;\n  }\n\n  .image {\n    max-width: 100%;\n    max-height: 300px;\n  }\n\n'], ['\n\n  .input {\n    border: none;\n    width: 0.1px;\n    height: 0.1px;\n    opacity: 0;\n    overflow: hidden;\n    position: absolute;\n    z-index: -1;\n  }\n\n  .image {\n    max-width: 100%;\n    max-height: 300px;\n  }\n\n']);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -40808,14 +40808,19 @@ var ImageStep = function (_React$Component) {
       var image = this.props.postcard.image;
       var disabled = !this.isValid();
 
-      var img = image.data.length ? (0, _react.createElement)('img', { className: styles.image, src: image.data }) : null;
+      var img = image.data.length ? (0, _react.createElement)('div', null, (0, _react.createElement)(_components.Spacer, { height: '20px' }), (0, _react.createElement)('img', { className: styles.image, src: image.data })) : null;
 
-      return (0, _react.createElement)(_components.Step, { title: 'choose a photo' }, (0, _react.createElement)('input', { type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }), img, (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled: disabled }));
+      return (0, _react.createElement)(_components.Step, { title: 'choose a photo' }, (0, _react.createElement)(_components.Button, { text: 'browse', onClick: this.handleFileClick.bind(this) }), (0, _react.createElement)('input', { className: styles.input, ref: 'file', type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }), img, (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'next', onClick: this.handleNextClick.bind(this), disabled: disabled }));
     }
   }, {
     key: 'isValid',
     value: function isValid() {
       return this.props.postcard.image.data.indexOf('data:image') === 0;
+    }
+  }, {
+    key: 'handleFileClick',
+    value: function handleFileClick(e) {
+      this.refs.file.click();
     }
   }, {
     key: 'handleImageLoad',
@@ -41094,13 +41099,17 @@ var PreviewStep = function (_React$Component) {
       var preview = this.props.postcard.preview;
       var disabled = !this.isValid();
 
+      var spinner = this.isLoading() ? (0, _react.createElement)(_components.Spinner) : null;
+
       var frontClassNames = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, styles.image, true), _defineProperty(_classNames, styles.hide, preview.side !== 'front'), _classNames));
       var frontImg = (0, _react.createElement)('img', { className: frontClassNames, src: preview.frontData });
 
       var backClassNames = (0, _classnames2.default)((_classNames2 = {}, _defineProperty(_classNames2, styles.image, true), _defineProperty(_classNames2, styles.hide, preview.side !== 'back'), _classNames2));
       var backImg = (0, _react.createElement)('img', { className: backClassNames, src: preview.backData });
 
-      return (0, _react.createElement)(_components.Step, { title: 'preview postcard' }, frontImg, backImg, (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)('p', { className: styles.sideLabel }, preview.side), (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)(_components.Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) }), (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'send', onClick: this.handleNextClick.bind(this), disabled: disabled }));
+      var sideLabel = !this.isLoading() ? (0, _react.createElement)('p', { className: styles.sideLabel }, preview.side) : null;
+
+      return (0, _react.createElement)(_components.Step, { title: 'preview postcard' }, spinner, frontImg, backImg, (0, _react.createElement)(_components.Spacer, { height: '5px' }), sideLabel, (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)(_components.Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) }), (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'send', onClick: this.handleNextClick.bind(this), disabled: disabled }));
     }
   }, {
     key: 'handleFlipClick',
@@ -41135,6 +41144,11 @@ var PreviewStep = function (_React$Component) {
         return ref.apply(this, arguments);
       };
     }()
+  }, {
+    key: 'isLoading',
+    value: function isLoading() {
+      return !this.isValid();
+    }
   }, {
     key: 'isValid',
     value: function isValid() {

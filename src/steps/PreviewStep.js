@@ -3,7 +3,7 @@ import { createElement as r } from 'react';
 import csjs from 'csjs';
 import classNames from 'classnames';
 
-import { Button, IFrame, Input, Spacer, Step } from '../components';
+import { Button, IFrame, Input, Spacer, Spinner, Step } from '../components';
 import { drawFront, drawBack } from '../util';
 
 
@@ -24,6 +24,8 @@ export default class PreviewStep extends React.Component {
     const preview = this.props.postcard.preview;
     const disabled = !this.isValid();
 
+    const spinner = this.isLoading() ? r(Spinner) : null;
+
     const frontClassNames = classNames({
       [styles.image]: true,
       [styles.hide]: preview.side !== 'front'
@@ -36,11 +38,14 @@ export default class PreviewStep extends React.Component {
     });
     const backImg =  r('img', { className: backClassNames, src: preview.backData });
 
+    const sideLabel = !this.isLoading() ? r('p', { className: styles.sideLabel }, preview.side) : null;
+
     return r(Step, { title: 'preview postcard' },
+      spinner,
       frontImg,
       backImg,
       r(Spacer, { height: '5px' }),
-      r('p', { className: styles.sideLabel }, preview.side),
+      sideLabel,
       r(Spacer, { height: '5px' }),
       r(Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) }),
 
@@ -61,6 +66,10 @@ export default class PreviewStep extends React.Component {
 
   async handleNextClick() {
     this.props.actions.nextStep();
+  }
+
+  isLoading() {
+    return !this.isValid();
   }
 
   isValid() {
