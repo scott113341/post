@@ -42,7 +42,7 @@ const initialState = {
   },
   message: {
     content: '',
-    font: 'Arial',
+    font: 'Helvetica',
     fontSize: 14
   },
   address: {

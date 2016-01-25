@@ -1,4 +1,6 @@
+var fs = require('fs');
 import blobFromDataUri from 'blueimp-canvas-to-blob';
+import csjs from 'csjs';
 
 
 export function clone() {
@@ -105,13 +107,79 @@ export async function drawFront(size, imgData, dpi) {
 }
 
 
-export async function drawBack(size, dpi) {
+export async function drawBack(size, message, dpi) {
   const { width, height } = size;
+  function d(distance) {
+    return distance * dpi;
+  }
+
+  const styles = csjs`
+
+    .container {
+      width: ${d(width)};
+      height: ${d(height)};
+      box-sizing: border-box;
+    }
+
+    .textContainer {
+      width: ${d(2.75)}px;
+      padding: ${d(0.2)}px;
+      box-sizing: border-box;
+    }
+
+    .message {
+      font-size: ${d(message.fontSize/100)}px;
+      font-family: ${message.font};
+    }
+
+    /*
+    .spacer {
+      width: 0;
+      height: ${d(1.55)}px;
+      float: right;
+    }
+
+    .bottomRight {
+      width: ${d(3.5)}px;
+      height: ${d(2.7)}px;
+      float: right;
+      clear: right;
+      background: white;
+    }
+    */
+
+  `;
+
+  const csjsSymbol = Object.getOwnPropertySymbols(styles)[0];
+  const messageText = String(message.content).replace(/\n/g, '<br/>');
+  const resetCss = fs.readFileSync(__dirname + '/../static/reset.css', 'utf8');
+
+  var svgString = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${d(width)}" height="${d(height)}">
+      <foreignObject width="100%" height="100%">
+        <style>${resetCss}</style>
+        <style>${styles[csjsSymbol]}</style>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+          <div class="${styles.container}">
+            <!--<div class="${styles.spacer}"></div>-->
+            <!--<div class="${styles.bottomRight}"></div>-->
+            <div class="${styles.textContainer}">
+              <span class="${styles.message}">${messageText}</span>
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+    </svg>
+  `;
+
+  const svgDataUrl = 'data:image/svg+xml,' + svgString;
+  const svgImg = await loadImageFromData(svgDataUrl);
 
   var canvas = document.createElement('canvas');
   canvas.width = width * dpi;
   canvas.height = height * dpi;
-
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(svgImg, 0, 0);
   return canvas.toDataURL();
 }
 

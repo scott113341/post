@@ -44,7 +44,7 @@ const stepOrder = [
 const styles = csjs`
 
   .stepContainer {
-    margin: 3px 6px 0;
+    margin: 3px 6px 10px;
   }
 
 `;

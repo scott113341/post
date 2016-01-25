@@ -40380,7 +40380,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(['\n\n  .stepContainer {\n    margin: 3px 6px 0;\n  }\n\n'], ['\n\n  .stepContainer {\n    margin: 3px 6px 0;\n  }\n\n']);
+var _templateObject = _taggedTemplateLiteral(['\n\n  .stepContainer {\n    margin: 3px 6px 10px;\n  }\n\n'], ['\n\n  .stepContainer {\n    margin: 3px 6px 10px;\n  }\n\n']);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -40577,7 +40577,7 @@ var initialState = {
   // square
   message: {
     content: '',
-    font: 'Arial',
+    font: 'Helvetica',
     fontSize: 14
   },
   address: {
@@ -41057,7 +41057,7 @@ var PreviewStep = function (_React$Component) {
     key: 'componentDidMount',
     value: function () {
       var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-        var dpi, size, selectedSize, frontImg, frontData, backData;
+        var dpi, size, selectedSize, frontImg, message, frontData, backData;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -41066,20 +41066,21 @@ var PreviewStep = function (_React$Component) {
                 size = this.props.postcard.size;
                 selectedSize = size.sizes[size.selectedIndex];
                 frontImg = this.props.postcard.image.data;
-                _context.next = 6;
+                message = this.props.postcard.message;
+                _context.next = 7;
                 return (0, _util.drawFront)(selectedSize, frontImg, dpi);
 
-              case 6:
+              case 7:
                 frontData = _context.sent;
-                _context.next = 9;
-                return (0, _util.drawBack)(selectedSize, dpi);
+                _context.next = 10;
+                return (0, _util.drawBack)(selectedSize, message, 600);
 
-              case 9:
+              case 10:
                 backData = _context.sent;
 
                 this.props.actions.editInput({ preview: { frontData: frontData, backData: backData } });
 
-              case 11:
+              case 12:
               case 'end':
                 return _context.stop();
             }
@@ -41213,7 +41214,7 @@ var FromAddressStep = function (_React$Component) {
     key: 'componentDidMount',
     value: function () {
       var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-        var postcard, apiKey, to, from, size, sizeName, frontImg, dpi, frontData, backData, res;
+        var postcard, apiKey, to, from, size, sizeName, frontImg, message, dpi, frontData, backData, res;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -41227,24 +41228,23 @@ var FromAddressStep = function (_React$Component) {
                 size = postcard.size.sizes[postcard.size.selectedIndex];
                 sizeName = size.name;
                 frontImg = postcard.image.data;
+                message = postcard.message;
                 dpi = 600;
-                _context.next = 11;
+                _context.next = 12;
                 return (0, _util.drawFront)(size, frontImg, dpi);
 
-              case 11:
+              case 12:
                 frontData = _context.sent;
-                _context.next = 14;
-                return (0, _util.drawBack)(size, dpi);
+                _context.next = 15;
+                return (0, _util.drawBack)(size, message, dpi);
 
-              case 14:
+              case 15:
                 backData = _context.sent;
-                _context.next = 17;
+                _context.next = 18;
                 return (0, _util.orderPostcard)(apiKey, to, from, sizeName, frontData, backData);
 
-              case 17:
+              case 18:
                 res = _context.sent;
-
-                //const res = await orderPostcard(apiKey, to, from, size, frontData, backData);
 
                 this.props.actions.editInput({ send: { isSending: false, didSend: true } });
                 if (res.status === 200) {
@@ -41253,7 +41253,7 @@ var FromAddressStep = function (_React$Component) {
                   this.props.actions.editInput({ send: { response: res.responseText } });
                 }
 
-              case 20:
+              case 21:
               case 'end':
                 return _context.stop();
             }
@@ -41275,7 +41275,7 @@ var FromAddressStep = function (_React$Component) {
       var success = this.didSucceed() ? (0, _react.createElement)('p', { className: styles.success }, 'success') : null;
       var error = this.didError() ? (0, _react.createElement)('pre', { className: styles.error }, send.response) : null;
 
-      return (0, _react.createElement)(_components.Step, { title: 'sending postcard' }, (0, _react.createElement)(_components.Spacer), spinner, success, error, (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'start over', onClick: this.handleNextClick.bind(this), disabled: disabled }));
+      return (0, _react.createElement)(_components.Step, { title: 'sending postcard' }, (0, _react.createElement)(_components.Spacer, { height: '20px' }), spinner, success, error, (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'start over', onClick: this.handleNextClick.bind(this), disabled: disabled }));
     }
   }, {
     key: 'didSucceed',
@@ -41662,6 +41662,8 @@ exports.default = (0, _csjs2.default)(_templateObject, constants.font, constants
 },{"./constants":414,"csjs-injectify/csjs-inject":195}],416:[function(require,module,exports){
 'use strict';
 
+var _templateObject = _taggedTemplateLiteral(['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n    /*\n    .spacer {\n      width: 0;\n      height: ', 'px;\n      float: right;\n    }\n\n    .bottomRight {\n      width: ', 'px;\n      height: ', 'px;\n      float: right;\n      clear: right;\n      background: white;\n    }\n    */\n\n  '], ['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n    /*\n    .spacer {\n      width: 0;\n      height: ', 'px;\n      float: right;\n    }\n\n    .bottomRight {\n      width: ', 'px;\n      height: ', 'px;\n      float: right;\n      clear: right;\n      background: white;\n    }\n    */\n\n  ']);
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -41674,9 +41676,16 @@ var _blueimpCanvasToBlob = require('blueimp-canvas-to-blob');
 
 var _blueimpCanvasToBlob2 = _interopRequireDefault(_blueimpCanvasToBlob);
 
+var _csjs = require('csjs-injectify/csjs-inject');
+
+var _csjs2 = _interopRequireDefault(_csjs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } step("next"); }); }; }
+
 
 function clone() {
   var _Object;
@@ -41821,22 +41830,39 @@ var drawFront = exports.drawFront = function () {
 }();
 
 var drawBack = exports.drawBack = function () {
-  var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(size, dpi) {
-    var width, height, canvas;
+  var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(size, message, dpi) {
+    var width, height, d, styles, csjsSymbol, messageText, resetCss, svgString, svgDataUrl, svgImg, canvas, ctx;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
+            d = function d(distance) {
+              return distance * dpi;
+            };
+
             width = size.width;
             height = size.height;
+            styles = (0, _csjs2.default)(_templateObject, d(width), d(height), d(2.75), d(0.2), d(message.fontSize / 100), message.font, d(1.55), d(3.5), d(2.7));
+            csjsSymbol = Object.getOwnPropertySymbols(styles)[0];
+            messageText = String(message.content).replace(/\n/g, '<br/>');
+            resetCss = "html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}\n";
+            svgString = '\n    <svg xmlns="http://www.w3.org/2000/svg" width="' + d(width) + '" height="' + d(height) + '">\n      <foreignObject width="100%" height="100%">\n        <style>' + resetCss + '</style>\n        <style>' + styles[csjsSymbol] + '</style>\n        <div xmlns="http://www.w3.org/1999/xhtml">\n          <div class="' + styles.container + '">\n            <!--<div class="' + styles.spacer + '"></div>-->\n            <!--<div class="' + styles.bottomRight + '"></div>-->\n            <div class="' + styles.textContainer + '">\n              <span class="' + styles.message + '">' + messageText + '</span>\n            </div>\n          </div>\n        </div>\n      </foreignObject>\n    </svg>\n  ';
+            svgDataUrl = 'data:image/svg+xml,' + svgString;
+            _context3.next = 11;
+            return loadImageFromData(svgDataUrl);
+
+          case 11:
+            svgImg = _context3.sent;
             canvas = document.createElement('canvas');
 
             canvas.width = width * dpi;
             canvas.height = height * dpi;
+            ctx = canvas.getContext('2d');
 
+            ctx.drawImage(svgImg, 0, 0);
             return _context3.abrupt('return', canvas.toDataURL());
 
-          case 6:
+          case 18:
           case 'end':
             return _context3.stop();
         }
@@ -41844,7 +41870,7 @@ var drawBack = exports.drawBack = function () {
     }, _callee3, this);
   }));
 
-  return function drawBack(_x11, _x12) {
+  return function drawBack(_x11, _x12, _x13) {
     return ref.apply(this, arguments);
   };
 }();
@@ -41912,7 +41938,7 @@ var rotateImageToLandscape = exports.rotateImageToLandscape = function () {
                 }, _callee4, _this);
               }));
 
-              return function (_x14) {
+              return function (_x15) {
                 return ref.apply(this, arguments);
               };
             }()));
@@ -41931,7 +41957,7 @@ var rotateImageToLandscape = exports.rotateImageToLandscape = function () {
     }, _callee5, this, [[0, 4]]);
   }));
 
-  return function rotateImageToLandscape(_x13) {
+  return function rotateImageToLandscape(_x14) {
     return ref.apply(this, arguments);
   };
 }();
@@ -41973,12 +41999,12 @@ var loadImageFromData = exports.loadImageFromData = function () {
     }, _callee7, this);
   }));
 
-  return function loadImageFromData(_x15) {
+  return function loadImageFromData(_x16) {
     return ref.apply(this, arguments);
   };
 }();
 
-},{"blueimp-canvas-to-blob":3}]},{},[401])
+},{"blueimp-canvas-to-blob":3,"csjs-injectify/csjs-inject":195}]},{},[401])
 
 
 //# sourceMappingURL=app.js.map

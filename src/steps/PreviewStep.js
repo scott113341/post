@@ -14,9 +14,10 @@ export default class PreviewStep extends React.Component {
     const size = this.props.postcard.size;
     const selectedSize = size.sizes[size.selectedIndex];
     const frontImg = this.props.postcard.image.data;
+    const message = this.props.postcard.message;
 
     const frontData = await drawFront(selectedSize, frontImg, dpi);
-    const backData = await drawBack(selectedSize, dpi);
+    const backData = await drawBack(selectedSize, message, 600);
     this.props.actions.editInput({ preview: { frontData, backData } });
   }
 

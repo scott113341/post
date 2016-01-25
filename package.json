@@ -23,6 +23,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babelify": "^7.2.0",
     "blueimp-canvas-to-blob": "^3.1.0",
+    "brfs": "^1.4.3",
     "browserify": "^12.0.1",
     "classnames": "^2.2.3",
     "csjs": "^1.0.0-beta.0",

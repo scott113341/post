@@ -18,12 +18,12 @@ export default class FromAddressStep extends React.Component {
     const size = postcard.size.sizes[postcard.size.selectedIndex];
     const sizeName = size.name;
     const frontImg = postcard.image.data;
+    const message = postcard.message;
     const dpi = 600;
 
     const frontData = await drawFront(size, frontImg, dpi);
-    const backData = await drawBack(size, dpi);
+    const backData = await drawBack(size, message, dpi);
     const res = await orderPostcard(apiKey, to, from, sizeName, frontData, backData);
-    //const res = await orderPostcard(apiKey, to, from, size, frontData, backData);
 
     this.props.actions.editInput({ send: { isSending: false, didSend: true }});
     if (res.status === 200) {
@@ -43,7 +43,7 @@ export default class FromAddressStep extends React.Component {
     const error = this.didError() ? r('pre', { className: styles.error }, send.response) : null;
 
     return r(Step, { title: 'sending postcard' },
-      r(Spacer),
+      r(Spacer, { height: '20px' }),
 
       spinner,
       success,
