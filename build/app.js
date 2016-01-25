@@ -41661,7 +41661,7 @@ exports.default = (0, _csjs2.default)(_templateObject, constants.font, constants
 },{"./constants":414,"csjs-injectify/csjs-inject":195}],416:[function(require,module,exports){
 'use strict';
 
-var _templateObject = _taggedTemplateLiteral(['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n    /*\n    .spacer {\n      width: 0;\n      height: ', 'px;\n      float: right;\n    }\n\n    .bottomRight {\n      width: ', 'px;\n      height: ', 'px;\n      float: right;\n      clear: right;\n      background: white;\n    }\n    */\n\n  '], ['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n    /*\n    .spacer {\n      width: 0;\n      height: ', 'px;\n      float: right;\n    }\n\n    .bottomRight {\n      width: ', 'px;\n      height: ', 'px;\n      float: right;\n      clear: right;\n      background: white;\n    }\n    */\n\n  ']);
+var _templateObject = _taggedTemplateLiteral(['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n  '], ['\n\n    .container {\n      width: ', ';\n      height: ', ';\n      box-sizing: border-box;\n    }\n\n    .textContainer {\n      width: ', 'px;\n      padding: ', 'px;\n      box-sizing: border-box;\n    }\n\n    .message {\n      font-size: ', 'px;\n      font-family: ', ';\n    }\n\n  ']);
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -41678,6 +41678,10 @@ var _blueimpCanvasToBlob2 = _interopRequireDefault(_blueimpCanvasToBlob);
 var _csjs = require('csjs-injectify/csjs-inject');
 
 var _csjs2 = _interopRequireDefault(_csjs);
+
+var _getCss = require('csjs/get-css');
+
+var _getCss2 = _interopRequireDefault(_getCss);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41830,7 +41834,7 @@ var drawFront = exports.drawFront = function () {
 
 var drawBack = exports.drawBack = function () {
   var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(size, message, dpi) {
-    var width, height, d, styles, csjsSymbol, messageText, resetCss, svgString, svgDataUrl, svgImg, canvas, ctx;
+    var width, height, d, styles, messageText, resetCss, svgString, svgDataUrl, svgImg, canvas, ctx;
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
@@ -41841,16 +41845,15 @@ var drawBack = exports.drawBack = function () {
 
             width = size.width;
             height = size.height;
-            styles = (0, _csjs2.default)(_templateObject, d(width), d(height), d(2.75), d(0.2), d(message.fontSize / 100), message.font, d(1.55), d(3.5), d(2.7));
-            csjsSymbol = Object.getOwnPropertySymbols(styles)[0];
+            styles = (0, _csjs2.default)(_templateObject, d(width), d(height), d(2.75), d(0.2), d(message.fontSize / 100), message.font);
             messageText = String(message.content).replace(/\n/g, '<br/>');
             resetCss = "html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}\n";
-            svgString = '\n    <svg xmlns="http://www.w3.org/2000/svg" width="' + d(width) + '" height="' + d(height) + '">\n      <foreignObject width="100%" height="100%">\n        <style>' + resetCss + '</style>\n        <style>' + styles[csjsSymbol] + '</style>\n        <div xmlns="http://www.w3.org/1999/xhtml">\n          <div class="' + styles.container + '">\n            <!--<div class="' + styles.spacer + '"></div>-->\n            <!--<div class="' + styles.bottomRight + '"></div>-->\n            <div class="' + styles.textContainer + '">\n              <span class="' + styles.message + '">' + messageText + '</span>\n            </div>\n          </div>\n        </div>\n      </foreignObject>\n    </svg>\n  ';
+            svgString = '\n    <svg xmlns="http://www.w3.org/2000/svg" width="' + d(width) + '" height="' + d(height) + '">\n      <foreignObject width="100%" height="100%">\n        <style>' + resetCss + '</style>\n        <style>' + (0, _getCss2.default)(styles) + '</style>\n        <div xmlns="http://www.w3.org/1999/xhtml">\n          <div class="' + styles.container + '">\n            <div class="' + styles.textContainer + '">\n              <span class="' + styles.message + '">' + messageText + '</span>\n            </div>\n          </div>\n        </div>\n      </foreignObject>\n    </svg>\n  ';
             svgDataUrl = 'data:image/svg+xml,' + svgString;
-            _context3.next = 11;
+            _context3.next = 10;
             return loadImageFromData(svgDataUrl);
 
-          case 11:
+          case 10:
             svgImg = _context3.sent;
             canvas = document.createElement('canvas');
 
@@ -41861,7 +41864,7 @@ var drawBack = exports.drawBack = function () {
             ctx.drawImage(svgImg, 0, 0);
             return _context3.abrupt('return', canvas.toDataURL());
 
-          case 18:
+          case 17:
           case 'end':
             return _context3.stop();
         }
@@ -42001,7 +42004,7 @@ var loadImageFromData = exports.loadImageFromData = function () {
   };
 }();
 
-},{"blueimp-canvas-to-blob":3,"csjs-injectify/csjs-inject":195}]},{},[401])
+},{"blueimp-canvas-to-blob":3,"csjs-injectify/csjs-inject":195,"csjs/get-css":197}]},{},[401])
 
 
 //# sourceMappingURL=app.js.map

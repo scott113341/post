@@ -1,6 +1,7 @@
 var fs = require('fs');
 import blobFromDataUri from 'blueimp-canvas-to-blob';
 import csjs from 'csjs';
+import getCss from 'csjs/get-css';
 
 
 export function clone() {
@@ -132,25 +133,8 @@ export async function drawBack(size, message, dpi) {
       font-family: ${message.font};
     }
 
-    /*
-    .spacer {
-      width: 0;
-      height: ${d(1.55)}px;
-      float: right;
-    }
-
-    .bottomRight {
-      width: ${d(3.5)}px;
-      height: ${d(2.7)}px;
-      float: right;
-      clear: right;
-      background: white;
-    }
-    */
-
   `;
 
-  const csjsSymbol = Object.getOwnPropertySymbols(styles)[0];
   const messageText = String(message.content).replace(/\n/g, '<br/>');
   const resetCss = fs.readFileSync(__dirname + '/../static/reset.css', 'utf8');
 
@@ -158,11 +142,9 @@ export async function drawBack(size, message, dpi) {
     <svg xmlns="http://www.w3.org/2000/svg" width="${d(width)}" height="${d(height)}">
       <foreignObject width="100%" height="100%">
         <style>${resetCss}</style>
-        <style>${styles[csjsSymbol]}</style>
+        <style>${getCss(styles)}</style>
         <div xmlns="http://www.w3.org/1999/xhtml">
           <div class="${styles.container}">
-            <!--<div class="${styles.spacer}"></div>-->
-            <!--<div class="${styles.bottomRight}"></div>-->
             <div class="${styles.textContainer}">
               <span class="${styles.message}">${messageText}</span>
             </div>
