@@ -41057,30 +41057,29 @@ var PreviewStep = function (_React$Component) {
     key: 'componentDidMount',
     value: function () {
       var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-        var dpi, size, selectedSize, frontImg, message, frontData, backData;
+        var size, selectedSize, frontImg, message, frontData, backData;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                dpi = 100;
                 size = this.props.postcard.size;
                 selectedSize = size.sizes[size.selectedIndex];
                 frontImg = this.props.postcard.image.data;
                 message = this.props.postcard.message;
-                _context.next = 7;
-                return (0, _util.drawFront)(selectedSize, frontImg, dpi);
+                _context.next = 6;
+                return (0, _util.drawFront)(selectedSize, frontImg, 100);
 
-              case 7:
+              case 6:
                 frontData = _context.sent;
-                _context.next = 10;
+                _context.next = 9;
                 return (0, _util.drawBack)(selectedSize, message, 600);
 
-              case 10:
+              case 9:
                 backData = _context.sent;
 
                 this.props.actions.editInput({ preview: { frontData: frontData, backData: backData } });
 
-              case 12:
+              case 11:
               case 'end':
                 return _context.stop();
             }
@@ -41102,15 +41101,15 @@ var PreviewStep = function (_React$Component) {
 
       var spinner = this.isLoading() ? (0, _react.createElement)(_components.Spinner) : null;
 
-      var frontClassNames = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, styles.image, true), _defineProperty(_classNames, styles.hide, preview.side !== 'front'), _classNames));
+      var frontClassNames = (0, _classnames2.default)((_classNames = {}, _defineProperty(_classNames, styles.image, true), _defineProperty(_classNames, styles.hide, preview.side !== 'front' || !preview.frontData.length), _classNames));
       var frontImg = (0, _react.createElement)('img', { className: frontClassNames, src: preview.frontData });
 
-      var backClassNames = (0, _classnames2.default)((_classNames2 = {}, _defineProperty(_classNames2, styles.image, true), _defineProperty(_classNames2, styles.hide, preview.side !== 'back'), _classNames2));
+      var backClassNames = (0, _classnames2.default)((_classNames2 = {}, _defineProperty(_classNames2, styles.image, true), _defineProperty(_classNames2, styles.hide, preview.side !== 'back' || !preview.backData.length), _classNames2));
       var backImg = (0, _react.createElement)('img', { className: backClassNames, src: preview.backData });
 
-      var sideLabel = !this.isLoading() ? (0, _react.createElement)('p', { className: styles.sideLabel }, preview.side) : null;
+      var sideGroup = !this.isLoading() ? (0, _react.createElement)('div', null, (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)('p', { className: styles.sideLabel }, preview.side), (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)(_components.Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) })) : null;
 
-      return (0, _react.createElement)(_components.Step, { title: 'preview postcard' }, spinner, frontImg, backImg, (0, _react.createElement)(_components.Spacer, { height: '5px' }), sideLabel, (0, _react.createElement)(_components.Spacer, { height: '5px' }), (0, _react.createElement)(_components.Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) }), (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'send', onClick: this.handleNextClick.bind(this), disabled: disabled }));
+      return (0, _react.createElement)(_components.Step, { title: 'preview postcard' }, (0, _react.createElement)(_components.Spacer, { height: '20px' }), spinner, frontImg, backImg, sideGroup, (0, _react.createElement)(_components.Spacer), (0, _react.createElement)(_components.Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }), (0, _react.createElement)(_components.Button, { text: 'send', onClick: this.handleNextClick.bind(this), disabled: disabled }));
     }
   }, {
     key: 'handleFlipClick',
@@ -41970,7 +41969,6 @@ var loadImageFromData = exports.loadImageFromData = function () {
       while (1) {
         switch (_context7.prev = _context7.next) {
           case 0:
-            console.log('loadImageFromData');
             return _context7.abrupt('return', new Promise(function (resolve) {
               var img = new Image();
               img.src = data;
@@ -41979,10 +41977,9 @@ var loadImageFromData = exports.loadImageFromData = function () {
                   while (1) {
                     switch (_context6.prev = _context6.next) {
                       case 0:
-                        console.log('img loaded');
                         resolve(img);
 
-                      case 2:
+                      case 1:
                       case 'end':
                         return _context6.stop();
                     }
@@ -41991,7 +41988,7 @@ var loadImageFromData = exports.loadImageFromData = function () {
               }));
             }));
 
-          case 2:
+          case 1:
           case 'end':
             return _context7.stop();
         }

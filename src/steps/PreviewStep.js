@@ -10,13 +10,12 @@ import { drawFront, drawBack } from '../util';
 export default class PreviewStep extends React.Component {
 
   async componentDidMount() {
-    const dpi = 100;
     const size = this.props.postcard.size;
     const selectedSize = size.sizes[size.selectedIndex];
     const frontImg = this.props.postcard.image.data;
     const message = this.props.postcard.message;
 
-    const frontData = await drawFront(selectedSize, frontImg, dpi);
+    const frontData = await drawFront(selectedSize, frontImg, 100);
     const backData = await drawBack(selectedSize, message, 600);
     this.props.actions.editInput({ preview: { frontData, backData } });
   }
@@ -29,26 +28,32 @@ export default class PreviewStep extends React.Component {
 
     const frontClassNames = classNames({
       [styles.image]: true,
-      [styles.hide]: preview.side !== 'front'
+      [styles.hide]: preview.side !== 'front' || !preview.frontData.length
     });
     const frontImg = r('img', { className: frontClassNames, src: preview.frontData });
 
     const backClassNames = classNames({
       [styles.image]: true,
-      [styles.hide]: preview.side !== 'back'
+      [styles.hide]: preview.side !== 'back' || !preview.backData.length
     });
     const backImg =  r('img', { className: backClassNames, src: preview.backData });
 
-    const sideLabel = !this.isLoading() ? r('p', { className: styles.sideLabel }, preview.side) : null;
+    const sideGroup = !this.isLoading() ?
+      r('div', null,
+        r(Spacer, { height: '5px' }),
+        r('p', { className: styles.sideLabel }, preview.side),
+        r(Spacer, { height: '5px' }),
+        r(Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) })
+      )
+      : null;
 
     return r(Step, { title: 'preview postcard' },
+      r(Spacer, { height: '20px' }),
       spinner,
       frontImg,
       backImg,
-      r(Spacer, { height: '5px' }),
-      sideLabel,
-      r(Spacer, { height: '5px' }),
-      r(Button, { text: 'flip', onClick: this.handleFlipClick.bind(this) }),
+
+      sideGroup,
 
       r(Spacer),
       r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),

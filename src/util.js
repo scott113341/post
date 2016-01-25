@@ -217,12 +217,10 @@ export async function rotateImageToLandscape(data) {
 
 
 export async function loadImageFromData(data) {
-  console.log('loadImageFromData');
   return new Promise(resolve => {
     var img = new Image();
     img.src = data;
     img.onload = async () => {
-      console.log('img loaded');
       resolve(img);
     }
   });
