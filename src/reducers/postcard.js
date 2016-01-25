@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 import * as ACTIONS from '../actions/constants';
 import { clone, getFromLocalStorage } from '../util';
@@ -86,18 +86,18 @@ export default function postcard(state=initialState, action) {
       return state;
 
     case ACTIONS.EDIT_INPUT:
-      return _.merge({}, state, action.value);
+      return merge({}, state, action.value);
 
     case ACTIONS.ADD_NEW_ADDRESS:
       var addresses = [].concat(state.address.addresses, action.address);
       localStorage.setItem('ADDRESSES', JSON.stringify(addresses));
-      return _.merge({}, state, { address: { addresses }});
+      return merge({}, state, { address: { addresses }});
 
     case ACTIONS.DELETE_ADDRESS:
       var addresses = [].concat(state.address.addresses);
       addresses.splice(action.index, 1);
       localStorage.setItem('ADDRESSES', JSON.stringify(addresses));
-      return _.merge(
+      return merge(
         {},
         state,
         { address: { addresses: null }},
