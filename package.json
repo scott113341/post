@@ -1,22 +1,22 @@
 {
-  "name": "postcard",
+  "name": "post",
   "version": "0.0.0",
-  "description": "For a project description, see [soundcasts-server](https://github.com/L33T-KR3W/soundcasts-server)",
-  "main": "index.js",
+  "description": "Self-contained website to send postcards via the Lob API.",
+  "main": "build/app.js",
   "scripts": {
     "start-dev": "gulp start-dev",
     "build": "BUILD_PROD=true gulp build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/L33T-KR3W/soundcasts-web.git"
+    "url": "git+https://github.com/scott113341/post.git"
   },
-  "author": "L33T KR3W",
+  "author": "Scott Hardy <scott.the.hardy@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/L33T-KR3W/soundcasts-web/issues"
+    "url": "https://github.com/scott113341/post/issues"
   },
-  "homepage": "https://github.com/L33T-KR3W/soundcasts-web",
+  "homepage": "https://github.com/scott113341/post",
   "devDependencies": {
     "babel-polyfill": "^6.3.14",
     "babel-preset-es2015": "^6.3.13",
