@@ -33,10 +33,12 @@ const styles = csjs`
     color: white;
     font-size: 18px;
     font-weight: 300;
+    cursor: pointer;
   }
 
   .button:disabled {
     background: gray;
+    cursor: default;
   }
 
 `;

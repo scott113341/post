@@ -94,7 +94,8 @@ const styles = csjs`
   .image {
     box-sizing: border-box;
     border: 1px solid black;
-    width: 100%;
+    max-width: 100%;
+    max-height: 300px;
   }
 
   .hide {

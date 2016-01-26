@@ -40,6 +40,7 @@ const styles = csjs`
     border-left: 1px solid black;
     border-right: 1px solid black;
     padding: 10px;
+    cursor: pointer;
   }
 
   .selected extends .cell {

@@ -44,7 +44,9 @@ const stepOrder = [
 const styles = csjs`
 
   .stepContainer {
-    margin: 3px 6px 10px;
+    margin: 0 auto;
+    padding: 3px 6px 10px;
+    max-width: 800px;
   }
 
 `;
