@@ -22,4 +22,8 @@ export default csjs`
     border-color: inherit;
   }
 
+  a, a:visited {
+    color: ${constants.linkColor};
+  }
+
 `;
