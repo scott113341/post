@@ -45,7 +45,7 @@ const styles = csjs`
 
   .stepContainer {
     margin: 0 auto;
-    padding: 3px 6px 10px;
+    padding: 3px 6px 25px;
     max-width: 800px;
   }
 

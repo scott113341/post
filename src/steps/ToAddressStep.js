@@ -82,11 +82,11 @@ export default class ToAddressStep extends React.Component {
   }
 
   handlePreviousClick() {
-    this.props.actions.previousStep();
+    this.props.actions.goToStep('previous');
   }
 
   handleNextClick() {
-    this.props.actions.nextStep();
+    this.props.actions.goToStep('next');
   }
 
 }

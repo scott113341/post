@@ -69,16 +69,8 @@ export default function postcard(state=initialState, action) {
     case ACTIONS.GO_TO_STEP:
       var stepIndex = state.stepIndex;
       if (action.step === 'next') stepIndex++;
-      if (action.step === 'previous') stepIndex++;
+      else if (action.step === 'previous') stepIndex--;
       else stepIndex = action.step;
-      return clone(state, { stepIndex });
-
-    case ACTIONS.NEXT_STEP:
-      var stepIndex = state.stepIndex + 1;
-      return clone(state, { stepIndex });
-
-    case ACTIONS.PREVIOUS_STEP:
-      var stepIndex = state.stepIndex - 1;
       return clone(state, { stepIndex });
 
     case ACTIONS.PERSIST_LOB_API_KEY:

@@ -6,16 +6,6 @@ export function goToStep(step) {
 }
 
 
-export function nextStep() {
-  return { type: ACTIONS.NEXT_STEP };
-}
-
-
-export function previousStep() {
-  return { type: ACTIONS.PREVIOUS_STEP };
-}
-
-
 export function persistLobApiKey(apiKey) {
   return { type: ACTIONS.PERSIST_LOB_API_KEY, apiKey };
 }

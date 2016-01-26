@@ -16,7 +16,7 @@ export default class WelcomeStep extends React.Component {
   }
 
   handleNextClick() {
-    this.props.actions.nextStep();
+    this.props.actions.goToStep('next');
   }
 
 }

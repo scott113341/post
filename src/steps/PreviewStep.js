@@ -67,11 +67,11 @@ export default class PreviewStep extends React.Component {
   }
 
   handlePreviousClick() {
-    this.props.actions.previousStep();
+    this.props.actions.goToStep('previous');
   }
 
   async handleNextClick() {
-    this.props.actions.nextStep();
+    this.props.actions.goToStep('next');
   }
 
   isLoading() {
