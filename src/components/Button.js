@@ -2,6 +2,8 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
+import { buttonBackgroundColor } from '../styles/constants';
+
 
 export default class Button extends React.Component {
 
@@ -29,7 +31,7 @@ const styles = csjs`
     margin: 0 4px;
     border: none;
     padding: 3px 12px;
-    background: cadetblue;
+    background: ${buttonBackgroundColor};
     color: white;
     font-size: 18px;
     font-weight: 300;

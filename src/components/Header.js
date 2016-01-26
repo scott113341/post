@@ -2,6 +2,8 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
+import { headerBackgroundColor } from '../styles/constants';
+
 
 export default class Header extends React.Component {
 
@@ -18,7 +20,7 @@ const styles = csjs`
 
   .header {
     padding: 5px 0;
-    background: gray;
+    background: ${headerBackgroundColor};
   }
 
   .text {
