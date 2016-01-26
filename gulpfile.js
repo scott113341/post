@@ -4,6 +4,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
+var gulpif = require('gulp-if');
 
 var babelify = require('babelify');
 var browserify = require('browserify');
@@ -23,6 +24,8 @@ gulp.task('watch', ['build'], watch);
 function buildJs(done) {
   log('building...');
 
+  var isProd = process.env.BUILD_PROD === 'true';
+
   var bundler = browserify('./src/index.js', { debug: true })
     .transform(babelify)
     .transform(injectify)
@@ -34,7 +37,7 @@ function buildJs(done) {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
-    //.pipe(uglify())
+    .pipe(gulpif(isProd, uglify()))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./build'))
     .on('end', function() {
