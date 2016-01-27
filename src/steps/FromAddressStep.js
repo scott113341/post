@@ -29,7 +29,7 @@ export default class FromAddressStep extends React.Component {
       address.addresses.map((addressOption, index) => {
         const selected = index === address.selectedFromIndex;
         const deleteButtonSpacer = selected ? r(Spacer, { height: '10px' }) : null;
-        const deleteButton = selected ? r('span', { onClick: this.handleDeleteAddress.bind(this, index) }, 'delete') : null;
+        const deleteButton = selected ? r(Button, { text: 'delete', onClick: this.handleDeleteAddress.bind(this, index) }) : null;
         return r(Cell, { key: index, onClick: this.handleClickAddress.bind(this, index), selected },
           r('p', null, addressOption.addressName),
           r('p', null, addressOption.addressLine1),

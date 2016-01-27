@@ -13,7 +13,7 @@ export default class LobStep extends React.Component {
 
     return r(Step, { title: 'lob account' },
       r('p', null, 'enter your lob api key'),
-
+      r(Spacer, { height: '10px' }),
       r(Input, { value: apiKey, onChange: this.handleInputChange.bind(this) }),
 
       r(Spacer),

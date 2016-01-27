@@ -51,6 +51,7 @@ const styles = csjs`
     margin: 0 auto;
     padding: 10px;
     width: 90%;
+    max-width: 500px;
     background: white;
     pointer-events: all;
   }
