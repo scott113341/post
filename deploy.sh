@@ -5,7 +5,7 @@ mkdir build
 
 npm run build
 
-cd build
+rm -rf .git
 git init
 git config user.name "Travis CI"
 git config user.email "travis@travis-ci.org"
