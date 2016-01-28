@@ -5,7 +5,7 @@
 [![Dependencies][deps-badge]][deps-href]
 
 
-[version-badge]: https://img.shields.io/github/release/scott113341/post.svg?label=version&style=flat-square
+[version-badge]: https://img.shields.io/github/tag/scott113341/post.svg?label=version&style=flat-square
 [version-href]: https://github.com/scott113341/post/tags
 
 [build-badge]: https://img.shields.io/travis/scott113341/post.svg?style=flat-square
