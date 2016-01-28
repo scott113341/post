@@ -109,7 +109,7 @@ export async function drawFront(size, imgData, dpi) {
 
 
 export async function drawBack(size, message, dpi) {
-  const { width, height } = size;
+  const { width, height, textWidth } = size;
   function d(distance) {
     return distance * dpi;
   }
@@ -123,7 +123,7 @@ export async function drawBack(size, message, dpi) {
     }
 
     .textContainer {
-      width: ${d(2.75)}px;
+      width: ${d(textWidth)}px;
       padding: ${d(0.2)}px;
       box-sizing: border-box;
     }

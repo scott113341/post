@@ -18,14 +18,16 @@ const initialState = {
         display: '4"x6"',
         price: 0.70,
         width: 6.25,
-        height: 4.25
+        height: 4.25,
+        textWidth: 2.75
       },
       {
         name: '6x11',
         display: '6"x11"',
         price: 1.50,
         width: 11.25,
-        height: 6.25
+        height: 6.25,
+        textWidth: 6.5
       }
     ]
   },
