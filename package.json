@@ -24,7 +24,7 @@
     "babelify": "^7.2.0",
     "blueimp-canvas-to-blob": "^3.1.0",
     "brfs": "^1.4.3",
-    "browserify": "^12.0.1",
+    "browserify": "^13.0.0",
     "classnames": "^2.2.3",
     "csjs": "^1.0.0-beta.0",
     "csjs-injectify": "git+https://github.com/rtsao/csjs-injectify.git",
