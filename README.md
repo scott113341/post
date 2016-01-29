@@ -34,7 +34,7 @@ Some code things used in `post`:
 [deps-badge]: https://img.shields.io/david/dev/scott113341/post.svg?style=flat-square
 [deps-href]: https://david-dm.org/scott113341/post#info=devDependencies
 
-[post-href]: http://post.scotthardy.me
+[post-href]: https://post.scotthardy.me
 [lob-href]: https://lob.com
 [csjs-href]: https://github.com/rtsao/csjs
 [waffle-href]: https://waffle.io/scott113341/post
