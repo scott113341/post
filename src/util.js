@@ -78,33 +78,43 @@ export async function orderPostcard(apiKey, to, from, size, front, back) {
 
 
 export async function drawFront(size, imgData, dpi) {
-  try {
-    const { width, height } = size;
-
-    var canvas = document.createElement('canvas');
-    canvas.width = width * dpi;
-    canvas.height = height * dpi;
-
-    var ctx = canvas.getContext('2d');
-    const img = await rotateImageToLandscape(imgData);
-
-    const trimSides = (img.width / img.height) > (width / height);
-    const sHeight = trimSides ? img.height : (height / width * img.width);
-    const sWidth =  trimSides ? (width / height * img.height) : img.width;
-    const sx = trimSides ? ((img.width - sWidth) / 2) : 0;
-    const sy = trimSides ? 0 : ((img.height - sHeight) / 2);
-    const dx = 0;
-    const dy = 0;
-    const dWidth = width * dpi;
-    const dHeight = height * dpi;
-    ctx.drawImage(img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
-
-    return canvas.toDataURL();
+  const { width, height } = size;
+  function d(distance) {
+    return distance * dpi;
   }
 
-  catch (e) {
-    console.log('wtffffff', e);
+  const img = await loadImageFromData(imgData);
+  const rotate = img.width < img.height;
+
+  var trimSides, degrees, scale, translate;
+  if (rotate) {
+    trimSides = (img.width / img.height) < (height / width);
+    degrees = [90, img.height / 2, img.height / 2];
+    scale = trimSides ? (d(height) / img.width) : (d(width) / img.height);
+    translate = trimSides ? [-((scale * img.height - d(width)) / 2), 0] : [0, -((scale * img.width - d(height)) / 2)];
   }
+  else {
+    trimSides = (img.width / img.height) > (width / height);
+    degrees = [0];
+    scale = trimSides ? (d(height) / img.height) : (d(width) / img.width);
+    translate = trimSides ? [-((scale * img.width - d(width)) / 2), 0] : [0, -((scale * img.height - d(height)) / 2)];
+  }
+
+  var svgString = `
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${d(width)}" height="${d(height)}">
+        <image width="${img.width}" height="${img.height}" transform="translate(${translate.join(' ')}) scale(${scale}) rotate(${degrees.join(' ')})" xlink:href="${imgData}"></image>
+      </svg>
+    `;
+
+  const svgDataUrl = 'data:image/svg+xml,' + svgString;
+  const svgImg = await loadImageFromData(svgDataUrl);
+
+  var canvas = document.createElement('canvas');
+  canvas.width = width * dpi;
+  canvas.height = height * dpi;
+  var ctx = canvas.getContext('2d');
+  ctx.drawImage(svgImg, 0, 0);
+  return canvas.toDataURL();
 }
 
 
@@ -256,8 +266,6 @@ export async function loadImageFromData(data) {
   return new Promise(resolve => {
     var img = new Image();
     img.src = data;
-    img.onload = async () => {
-      resolve(img);
-    }
+    img.onload = () => resolve(img);
   });
 }
