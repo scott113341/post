@@ -1,6 +1,6 @@
 {
   "name": "post",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Self-contained website to send postcards via the Lob API.",
   "main": "build/app.js",
   "scripts": {
