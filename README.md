@@ -22,6 +22,7 @@ Some code things used in `post`:
 * SVG + Canvas + Data URIs
 * Travis CI deployment to GitHub Pages
 * Ye olde `new XMLHttpRequest();`
+* [Waffle.io][waffle-href] for organization
 
 
 [version-badge]: https://img.shields.io/github/tag/scott113341/post.svg?label=version&style=flat-square
@@ -36,3 +37,4 @@ Some code things used in `post`:
 [post-href]: http://post.scotthardy.me
 [lob-href]: https://lob.com
 [csjs-href]: https://github.com/rtsao/csjs
+[waffle-href]: https://waffle.io/scott113341/post
