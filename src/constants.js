@@ -1,1 +1,1 @@
-export const API_URL = 'http://api.soundcasts.net/soundcast.xml';
+export const LOB_API_KEY = 'LOB_API_KEY';

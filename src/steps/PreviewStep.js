@@ -10,14 +10,21 @@ import { drawFront, drawBack } from '../util';
 export default class PreviewStep extends React.Component {
 
   async componentDidMount() {
+    const preview = this.props.postcard.preview;
     const size = this.props.postcard.size;
     const selectedSize = size.sizes[size.selectedIndex];
     const frontImg = this.props.postcard.image.data;
     const message = this.props.postcard.message;
 
-    const frontData = await drawFront(selectedSize, frontImg, 100);
-    const backData = await drawBack(selectedSize, message, 600);
-    this.props.actions.editInput({ preview: { frontData, backData } });
+    if (!preview.frontData.length) {
+      const frontData = await drawFront(selectedSize, frontImg, 100);
+      this.props.actions.changePreviewImage('front', frontData);
+    }
+
+    if (!preview.backData.length) {
+      const backData = await drawBack(selectedSize, message, 600);
+      this.props.actions.changePreviewImage('back', backData);
+    }
   }
 
   render() {
@@ -28,13 +35,13 @@ export default class PreviewStep extends React.Component {
 
     const frontClassNames = classNames({
       [styles.image]: true,
-      [styles.hide]: preview.side !== 'front' || !preview.frontData.length
+      [styles.hide]: preview.side !== 'front' || this.isLoading()
     });
     const frontImg = r('img', { className: frontClassNames, src: preview.frontData });
 
     const backClassNames = classNames({
       [styles.image]: true,
-      [styles.hide]: preview.side !== 'back' || !preview.backData.length
+      [styles.hide]: preview.side !== 'back' || this.isLoading()
     });
     const backImg =  r('img', { className: backClassNames, src: preview.backData });
 
@@ -63,7 +70,7 @@ export default class PreviewStep extends React.Component {
 
   handleFlipClick() {
     const newSide = this.props.postcard.preview.side === 'front' ? 'back' : 'front';
-    this.props.actions.editInput({ preview: { side: newSide }});
+    this.props.actions.changeSelectedPreviewSide(newSide);
   }
 
   handlePreviousClick() {

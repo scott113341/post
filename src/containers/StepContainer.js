@@ -37,7 +37,7 @@ const stepOrder = [
   'FromAddressStep',
   'ToAddressStep',
   'PreviewStep',
-  'SendStep',
+  'SendStep'
 ];
 
 

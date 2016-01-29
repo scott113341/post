@@ -68,6 +68,9 @@ const initialState = {
 
 export default function postcard(state=initialState, action) {
   switch (action.type) {
+    case ACTIONS.SET_VALUE:
+      return merge({}, state, action.value);
+
     case ACTIONS.GO_TO_STEP:
       var stepIndex = state.stepIndex;
       if (action.step === 'next') stepIndex++;
@@ -75,14 +78,11 @@ export default function postcard(state=initialState, action) {
       else stepIndex = action.step;
       return clone(state, { stepIndex });
 
-    case ACTIONS.PERSIST_LOB_API_KEY:
-      localStorage.setItem('LOB_API_KEY', action.apiKey);
-      return state;
+    case ACTIONS.RESET_PREVIEW:
+      const sideData = `${action.side}Data`;
+      return merge({}, state, { preview: { [sideData]: '' }});
 
-    case ACTIONS.EDIT_INPUT:
-      return merge({}, state, action.value);
-
-    case ACTIONS.ADD_NEW_ADDRESS:
+    case ACTIONS.ADD_ADDRESS:
       var addresses = [].concat(state.address.addresses, action.address);
       localStorage.setItem('ADDRESSES', JSON.stringify(addresses));
       return merge({}, state, { address: { addresses }});

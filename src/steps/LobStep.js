@@ -14,7 +14,7 @@ export default class LobStep extends React.Component {
     return r(Step, { title: 'lob account' },
       r('p', null, 'enter your lob api key'),
       r(Spacer, { height: '10px' }),
-      r(Input, { value: apiKey, onChange: this.handleInputChange.bind(this) }),
+      r(Input, { value: apiKey, onChange: this.handleApiKeyInputChange.bind(this) }),
 
       r(Spacer),
       r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
@@ -26,8 +26,8 @@ export default class LobStep extends React.Component {
     return this.props.postcard.lob.apiKey.length === 40;
   }
 
-  handleInputChange(value) {
-    this.props.actions.editInput({ lob: { apiKey: value }});
+  handleApiKeyInputChange(apiKey) {
+    this.props.actions.changeLobApiKey(apiKey);
   }
 
   handlePreviousClick() {
@@ -35,7 +35,6 @@ export default class LobStep extends React.Component {
   }
 
   handleNextClick() {
-    this.props.actions.persistLobApiKey(this.props.postcard.lob.apiKey);
     this.props.actions.goToStep('next');
   }
 

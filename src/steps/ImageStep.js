@@ -18,7 +18,7 @@ export default class ImageStep extends React.Component {
     ): null;
 
     return r(Step, { title: 'choose a photo' },
-      r(Button, { text: 'browse', onClick: this.handleFileClick.bind(this) }),
+      r(Button, { text: 'browse', onClick: this.handleBrowseButtonClick.bind(this) }),
       r('input', { className: styles.input, ref: 'file', type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }),
 
       img,
@@ -33,17 +33,17 @@ export default class ImageStep extends React.Component {
     return this.props.postcard.image.data.indexOf('data:image') === 0;
   }
 
-  handleFileClick(e) {
+  handleBrowseButtonClick(e) {
     this.refs.file.click();
   }
 
   handleImageLoad(e) {
-    this.props.actions.editInput({ image: { data: '' }});
+    this.props.actions.changeImageData('');
     var reader = new FileReader();
     var file = e.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = upload => {
-      this.props.actions.editInput({ image: { data: upload.target.result }});
+      this.props.actions.changeImageData(upload.target.result);
     };
   }
 

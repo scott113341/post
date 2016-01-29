@@ -2,7 +2,7 @@ import React from 'react';
 import { createElement as r } from 'react';
 import csjs from 'csjs';
 
-import { Cell, Button, Input, Modal, Spacer, Step } from '../components';
+import { Cell, Button, Input, NewAddressModal, Spacer, Step } from '../components';
 
 
 export default class ToAddressStep extends React.Component {
@@ -11,18 +11,11 @@ export default class ToAddressStep extends React.Component {
     const address = this.props.postcard.address;
     const disabled = !this.isValid();
 
-    const modal = address.showModal ? r(Modal, { title: 'new address' },
-      r('input', { className: styles.modalInput, ref: 'addressName', placeholder: 'name' }),
-      r('input', { className: styles.modalInput, ref: 'addressLine1', placeholder: 'address line 1' }),
-      r('input', { className: styles.modalInput, ref: 'addressLine2', placeholder: 'address line 2' }),
-      r('input', { className: styles.modalInput, ref: 'addressCity', placeholder: 'city' }),
-      r('input', { className: styles.modalInput, ref: 'addressState', placeholder: 'state' }),
-      r('input', { className: styles.modalInput, ref: 'addressZip', placeholder: 'zip', type: 'number' }),
-
-      r(Spacer),
-      r(Button, { text: 'cancel', onClick: this.handleClickCancelNewAddress.bind(this) }),
-      r(Button, { text: 'save', onClick: this.handleClickSaveNewAddress.bind(this) })
-    ) : null;
+    const modal = r(NewAddressModal, {
+      show: address.showModal,
+      onCancel: this.handleClickCancelModal.bind(this),
+      onSave: this.handleClickSaveModal.bind(this)
+    });
 
     return r(Step, { title: 'to address' },
 
@@ -53,32 +46,24 @@ export default class ToAddressStep extends React.Component {
   }
 
   handleClickAddress(index) {
-    this.props.actions.editInput({ address: { selectedToIndex: index }});
+    this.props.actions.changeSelectedAddress('to', index);
   }
 
   handleClickNewAddress() {
-    this.props.actions.editInput({ address: { selectedToIndex: -1 }});
-    this.props.actions.editInput({ address: { showModal: true }});
+    this.props.actions.changeSelectedAddress('to', -1);
+    this.props.actions.showNewAddressModal(true);
   }
 
-  handleClickSaveNewAddress() {
-    this.props.actions.addNewAddress({
-      addressName: this.refs.addressName.value,
-      addressLine1: this.refs.addressLine1.value,
-      addressLine2: this.refs.addressLine2.value,
-      addressCountry: 'US',
-      addressCity: this.refs.addressCity.value,
-      addressState: this.refs.addressState.value,
-      addressZip: this.refs.addressZip.value
-    });
-    const newAddressIndex = this.props.postcard.address.addresses.length - 1;
-    this.props.actions.editInput({ address: { selectedToIndex: newAddressIndex }});
-    this.props.actions.editInput({ address: { showModal: false }});
-  }
-
-  handleClickCancelNewAddress() {
+  handleClickCancelModal() {
     console.log('cancel');
-    this.props.actions.editInput({ address: { showModal: false }});
+    this.props.actions.showNewAddressModal(false);
+  }
+
+  handleClickSaveModal(address) {
+    this.props.actions.addAddress(address);
+    const newAddressIndex = this.props.postcard.address.addresses.length;
+    this.props.actions.changeSelectedAddress('to', newAddressIndex);
+    this.props.actions.showNewAddressModal(false);
   }
 
   handlePreviousClick() {
@@ -94,8 +79,6 @@ export default class ToAddressStep extends React.Component {
 
 const styles = csjs`
 
-  .modalInput {
-    width: 100%;
-  }
+
 
 `;

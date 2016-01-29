@@ -8,7 +8,7 @@ export default class Modal extends React.Component {
 
   static propTypes = {
     children: React.PropTypes.node.isRequired,
-    title: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired
   };
 
   handleClick() {

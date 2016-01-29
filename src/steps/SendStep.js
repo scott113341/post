@@ -9,7 +9,7 @@ import { drawFront, drawBack, orderPostcard } from '../util';
 export default class FromAddressStep extends React.Component {
   
   async componentDidMount() {
-    this.props.actions.editInput({ send: { isSending: true }});
+    this.props.actions.changeSendingStatus(true);
 
     const postcard = this.props.postcard;
     const apiKey = postcard.lob.apiKey;
@@ -25,12 +25,13 @@ export default class FromAddressStep extends React.Component {
     const backData = await drawBack(size, message, dpi);
     const res = await orderPostcard(apiKey, to, from, sizeName, frontData, backData);
 
-    this.props.actions.editInput({ send: { isSending: false, didSend: true }});
+    this.props.actions.changeSendingStatus(false);
+    this.props.actions.changeSentStatus(true);
     if (res.status === 200) {
-      this.props.actions.editInput({ send: { response: '' } });
+      this.props.actions.changeResponseStatus('');
     }
     else {
-      this.props.actions.editInput({ send: { response: res.responseText } });
+      this.props.actions.changeResponseStatus(res.responseText);
     }
   }
 

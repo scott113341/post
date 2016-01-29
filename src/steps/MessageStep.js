@@ -20,7 +20,7 @@ export default class MessageStep extends React.Component {
   }
 
   handleInputChange(e) {
-    this.props.actions.editInput({ message: { content: e.target.value }});
+    this.props.actions.changeMessage(e.target.value);
   }
 
   handlePreviousClick() {
