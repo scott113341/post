@@ -19,7 +19,13 @@ const initialState = {
         price: 0.70,
         width: 6.25,
         height: 4.25,
-        textWidth: 2.75
+        textWidth: 2.45,
+        addressWidth: 3.292,
+        addressHeight: 2.375,
+        addressLeft: 2.681,
+        addressTop: 1.625,
+        addressesLeft: 0.181,
+        postageLeft: 2.208
       },
       {
         name: '6x11',
@@ -27,7 +33,13 @@ const initialState = {
         price: 1.50,
         width: 11.25,
         height: 6.25,
-        textWidth: 6.5
+        textWidth: 6.7,
+        addressWidth: 4,
+        addressHeight: 2.375,
+        addressLeft: 6.972,
+        addressTop: 3.625,
+        addressesLeft: 0.528,
+        postageLeft: 2.917
       }
     ]
   },
@@ -49,8 +61,8 @@ const initialState = {
   },
   address: {
     showModal: false,
-    selectedToIndex: -1,
     selectedFromIndex: -1,
+    selectedToIndex: -1,
     addresses: getFromLocalStorage('ADDRESSES', [])
   },
   preview: {

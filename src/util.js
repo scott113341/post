@@ -108,8 +108,9 @@ export async function drawFront(size, imgData, dpi) {
 }
 
 
-export async function drawBack(size, message, dpi) {
+export async function drawBack(size, message, dpi, fromAddress=null, toAddress=null) {
   const { width, height, textWidth } = size;
+  const showAddresses = fromAddress && toAddress;
   function d(distance) {
     return distance * dpi;
   }
@@ -117,15 +118,15 @@ export async function drawBack(size, message, dpi) {
   const styles = csjs`
 
     .container {
-      width: ${d(width)};
-      height: ${d(height)};
+      position: absolute;
+      width: ${d(width)}px;
+      height: ${d(height)}px;
+      padding: ${d(0.2)}px;
       box-sizing: border-box;
     }
 
     .textContainer {
       width: ${d(textWidth)}px;
-      padding: ${d(0.2)}px;
-      box-sizing: border-box;
     }
 
     .message {
@@ -133,9 +134,57 @@ export async function drawBack(size, message, dpi) {
       font-family: ${message.font};
     }
 
+    .addressContainer {
+      display: ${showAddresses ? 'block' : 'none'};
+      position: absolute;
+      width: ${d(size.addressWidth)}px;
+      height: ${d(size.addressHeight)}px;
+      left: ${d(size.addressLeft)}px;
+      top: ${d(size.addressTop)}px;
+      border: ${d(0.01)}px solid black;
+      font-size: ${d(message.fontSize/100)}px;
+    }
+
+    .addressText {
+      position: absolute;
+      font-family: Arial;
+      text-transform: uppercase;
+    }
+
+    .fromAddress extends .addressText {
+      left: ${d(size.addressesLeft)}px;
+      top: ${d(0.266)}px;
+      font-size: ${d(11/100)}px;
+    }
+
+    .toAddress extends .addressText {
+      left: ${d(size.addressesLeft)}px;
+      top: ${d(1.339)}px;
+      font-size: ${d(14/100)}px;
+    }
+
+    .postage extends .addressText {
+      width: ${d(0.78)}px;
+      height: ${d(0.639)}px;
+      left: ${d(size.postageLeft)}px;
+      top: ${d(0.181)}px;
+      border: ${d(0.01)}px solid black;
+      text-align: center;
+      background: #aaa;
+    }
+
   `;
 
-  const messageText = String(message.content).replace(/\n/g, '<br/>');
+  const formatText = text => String(text).replace(/(.+)\n/g, '$1<br/>');
+  const formatAddress = a => formatText(`
+    ${a.addressName}
+    ${a.addressLine1}${a.addressLine2 ? `\n${a.addressLine2}` : ''}
+    ${a.addressCity}, ${a.addressState} ${a.addressZip}
+  `);
+
+  const messageText = formatText(message.content);
+  const fromAddressText = fromAddress ? formatAddress(fromAddress) : '';
+  const toAddressText = toAddress ? formatAddress(toAddress) : '';
   const resetCss = fs.readFileSync(__dirname + '/../static/reset.css', 'utf8');
 
   var svgString = `
@@ -147,6 +196,11 @@ export async function drawBack(size, message, dpi) {
           <div class="${styles.container}">
             <div class="${styles.textContainer}">
               <span class="${styles.message}">${messageText}</span>
+            </div>
+            <div class="${styles.addressContainer}">
+              <div class="${styles.postage}"></div>
+              <div class="${styles.fromAddress}">${fromAddressText}</div>
+              <div class="${styles.toAddress}">${toAddressText}</div>
             </div>
           </div>
         </div>

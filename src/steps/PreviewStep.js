@@ -10,8 +10,7 @@ import { drawFront, drawBack } from '../util';
 export default class PreviewStep extends React.Component {
 
   async componentDidMount() {
-    const preview = this.props.postcard.preview;
-    const size = this.props.postcard.size;
+    const { size, preview, address } = this.props.postcard;
     const selectedSize = size.sizes[size.selectedIndex];
     const frontImg = this.props.postcard.image.data;
     const message = this.props.postcard.message;
@@ -22,7 +21,9 @@ export default class PreviewStep extends React.Component {
     }
 
     if (!preview.backData.length) {
-      const backData = await drawBack(selectedSize, message, 600);
+      const fromAddress = address.addresses[address.selectedFromIndex];
+      const toAddress = address.addresses[address.selectedToIndex];
+      const backData = await drawBack(selectedSize, message, 600, fromAddress, toAddress);
       this.props.actions.changePreviewImage('back', backData);
     }
   }
