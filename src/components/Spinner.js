@@ -7,9 +7,10 @@ export default class Spinner extends React.Component {
 
   render() {
     return r('div', { className: styles.spinner },
-      r('div', { className: styles.bounce1 }),
-      r('div', { className: styles.bounce2 }),
-      r('div', { className: styles.bounce3 })
+      r('div', { className: styles.bar1 }),
+      r('div', { className: styles.bar2 }),
+      r('div', { className: styles.bar3 }),
+      r('div', { className: styles.bar4 })
     );
   }
 
@@ -24,40 +25,36 @@ const styles = csjs`
     text-align: center;
   }
 
-  .bounce {
-    width: 18px;
+  .bar {
+    width: 9px;
     height: 18px;
+    margin: 0 3px;
     background-color: #333;
-
-    border-radius: 100%;
     display: inline-block;
-    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: bar 1.6s infinite ease-in-out both;
   }
 
-  .bounce1 extends .bounce {
-    -webkit-animation-delay: -0.32s;
-    animation-delay: -0.32s;
+  .bar1 extends .bar {
+    animation-delay: -0.6s;
   }
 
-  .bounce2 extends .bounce {
-    -webkit-animation-delay: -0.16s;
-    animation-delay: -0.16s;
+  .bar2 extends .bar {
+    animation-delay: -0.4s;
   }
 
-  .bounce3 extends .bounce {}
-
-  @-webkit-keyframes sk-bouncedelay {
-    0%, 80%, 100% { -webkit-transform: scale(0) }
-    40% { -webkit-transform: scale(1.0) }
+  .bar3 extends .bar {
+    animation-delay: -0.2s;
   }
 
-  @keyframes sk-bouncedelay {
+  .bar4 extends .bar {
+    animation-delay: 0s;
+  }
+
+  @keyframes bar {
     0%, 80%, 100% {
-      -webkit-transform: scale(0);
       transform: scale(0);
-    } 40% {
-      -webkit-transform: scale(1.0);
+    }
+    40% {
       transform: scale(1.0);
     }
   }
