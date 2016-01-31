@@ -185,12 +185,12 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
 
   `;
 
-  const formatText = text => String(text).replace(/(.+)\n/g, '$1<br/>');
-  const formatAddress = a => formatText(`
-    ${a.addressName}
+  const formatText = text => String(text).replace(/\n/g, '<br/>');
+  const formatAddress = a => formatText(
+    `${a.addressName}
     ${a.addressLine1}${a.addressLine2 ? `\n${a.addressLine2}` : ''}
-    ${a.addressCity}, ${a.addressState} ${a.addressZip}
-  `);
+    ${a.addressCity}, ${a.addressState} ${a.addressZip}`
+  );
 
   const messageText = formatText(message.content);
   const fromAddressText = fromAddress ? formatAddress(fromAddress) : '';
