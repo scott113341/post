@@ -15,11 +15,11 @@ export default class NewAddressModal extends React.Component {
 
   render() {
     return this.props.show ? r(Modal, { title: 'new address' },
-      r('input', { className: styles.input, ref: 'addressName', placeholder: 'name' }),
-      r('input', { className: styles.input, ref: 'addressLine1', placeholder: 'address line 1' }),
-      r('input', { className: styles.input, ref: 'addressLine2', placeholder: 'address line 2' }),
-      r('input', { className: styles.input, ref: 'addressCity', placeholder: 'city' }),
-      r('input', { className: styles.input, ref: 'addressState', placeholder: 'state' }),
+      r('input', { className: styles.input, ref: 'addressName', placeholder: 'name', autoCapitalize: 'words' }),
+      r('input', { className: styles.input, ref: 'addressLine1', placeholder: 'address line 1', autoCapitalize: 'words' }),
+      r('input', { className: styles.input, ref: 'addressLine2', placeholder: 'address line 2', autoCapitalize: 'words' }),
+      r('input', { className: styles.input, ref: 'addressCity', placeholder: 'city', autoCapitalize: 'words' }),
+      r('input', { className: styles.input, ref: 'addressState', placeholder: 'state abbreviation', autoCapitalize: 'characters' }),
       r('input', { className: styles.input, ref: 'addressZip', placeholder: 'zip', type: 'number' }),
 
       r(Spacer),

@@ -14,7 +14,7 @@ export default class LobStep extends React.Component {
     return r(Step, { title: 'lob account' },
       r('p', null, 'enter your lob api key'),
       r(Spacer, { height: '10px' }),
-      r(Input, { value: apiKey, onChange: this.handleApiKeyInputChange.bind(this) }),
+      r(Input, { value: apiKey, onChange: this.handleApiKeyInputChange.bind(this), autoCapitalize: 'none' }),
 
       r(Spacer),
       r(Button, { text: 'back', onClick: this.handlePreviousClick.bind(this) }),
