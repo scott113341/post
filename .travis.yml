@@ -21,4 +21,6 @@ after_success:
   - cat ~/.gitconfig
   - git status
   - git log -1
+  - git rev-parse --abbrev-ref HEAD
+  - git symbolic-ref --short HEAD
   - ./node_modules/.bin/push-dir --dir build --branch bb-pages
