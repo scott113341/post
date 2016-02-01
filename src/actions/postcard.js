@@ -8,6 +8,7 @@ export function goToStep(step) {
 
 
 export function changeLobApiKey(apiKey) {
+  apiKey = apiKey.replace(/\s/g, '');
   localStorage.setItem(CONSTANTS.LOB_API_KEY, apiKey);
   return { type: ACTIONS.SET_VALUE, value: { lob: { apiKey }}};
 }
