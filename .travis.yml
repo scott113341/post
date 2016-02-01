@@ -14,7 +14,9 @@ script: npm run test
 
 after_success:
   - npm i -g env-credential
+  - ls -la ./node_modules/.bin
   - git config --global credential.helper env-credential --username=GH_TOKEN
   - git config --global user.name set $GIT_COMMIT_USER
   - git config --global user.email set $GIT_COMMIT_EMAIL
+  - cat ~/.gitconfig
   - ./node_modules/.bin/push-dir --dir build --branch bb-pages
