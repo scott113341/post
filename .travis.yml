@@ -14,7 +14,7 @@ script: npm run test
 
 after_success:
   - npm run build
-  - git config --global credential.helper "$PWD/node_modules/.bin/env-credential --username=GIT_USER_NAME"
+  - git config --global credential.helper "$PWD/node_modules/.bin/git-credential-env-credential --username=GIT_USER_NAME"
   - git config --global user.name $GIT_COMMIT_USER
   - git config --global user.email $GIT_COMMIT_EMAIL
   - npm run deploy
