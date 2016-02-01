@@ -15,13 +15,7 @@ script: npm run test
 after_success:
   - npm run build
   - npm i -g env-credential
-  - ls -la ./node_modules/.bin
   - git config --global credential.helper "env-credential --username=GIT_USER_NAME"
   - git config --global user.name $GIT_COMMIT_USER
   - git config --global user.email $GIT_COMMIT_EMAIL
-  - cat ~/.gitconfig
-  - git status
-  - git log -1
-  - git rev-parse --abbrev-ref HEAD
-  - git symbolic-ref --short HEAD
   - npm run deploy
