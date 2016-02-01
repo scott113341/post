@@ -13,7 +13,8 @@ env:
 script:
   - npm run test
   - npm run build
-  - git config --global credential.helper "$PWD/node_modules/.bin/env-credential --username=GIT_USER_NAME"
+  - npm install -g git-credential-env
+  - git config --global credential.helper "env --username=GIT_USER_NAME"
   - git config --global user.name $GIT_COMMIT_USER
   - git config --global user.email $GIT_COMMIT_EMAIL
   - npm run deploy
