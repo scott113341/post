@@ -1,6 +1,6 @@
 {
   "name": "post",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Self-contained website to send postcards via the Lob API.",
   "author": "Scott Hardy <scott.the.hardy@gmail.com>",
   "repository": "git@github.com:scott113341/post.git",
