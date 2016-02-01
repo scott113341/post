@@ -45,7 +45,6 @@
     "redux": "^3.0.5",
     "redux-logger": "^2.3.2",
     "redux-thunk": "^1.0.3",
-    "travis-encrypt": "^2.1.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
