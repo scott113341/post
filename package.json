@@ -8,10 +8,11 @@
   "bugs": "https://github.com/scott113341/post/issues",
   "main": "build/app.js",
   "scripts": {
-    "start-dev": "rm -rf build && gulp start-dev",
-    "build": "BUILD_PROD=true rm -rf build && gulp build",
-    "test": "exit 0",
-    "deploy": "push-dir --dir build --branch gh-pages"
+    "clean": "rm -rf build",
+    "start-dev": "npm run clean && gulp start-dev",
+    "build-dev": "npm run clean && gulp build-dev",
+    "build-prod": "npm run clean && gulp build-prod",
+    "deploy": "npm run build-prod && push-dir --dir build --branch gh-pages"
   },
   "devDependencies": {
     "babel-polyfill": "^6.3.14",
@@ -26,7 +27,6 @@
     "csjs-injectify": "git+https://github.com/rtsao/csjs-injectify.git",
     "git-credential-env": "^0.4.0",
     "gulp": "^3.9.0",
-    "gulp-if": "^2.0.0",
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.1",

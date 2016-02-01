@@ -4,7 +4,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-var gulpif = require('gulp-if');
 
 var babelify = require('babelify');
 var browserify = require('browserify');
@@ -14,18 +13,18 @@ var http = require('http');
 var nodeStatic = require('node-static');
 
 
-gulp.task('start-dev', ['watch'], startServer);
-gulp.task('build', ['build-js', 'build-static']);
+gulp.task('start-dev', ['_watch-dev'], startServer);
+gulp.task('build-dev', ['_build-js-dev', '_build-static']);
+gulp.task('build-prod', ['_build-js-prod', '_build-static']);
 
-gulp.task('build-js', buildJs);
-gulp.task('build-static', buildStatic);
-gulp.task('watch', ['build'], watch);
+gulp.task('_build-js-dev', buildJsDev);
+gulp.task('_build-js-prod', buildJsProd);
+gulp.task('_build-static', buildStatic);
+gulp.task('_watch-dev', ['build-dev'], watchDev);
 
 
-function buildJs(done) {
+function buildJsDev(done) {
   log('building...');
-
-  var isProd = process.env.BUILD_PROD === 'true';
 
   var bundler = browserify('./src/index.js', { debug: true })
     .transform(babelify)
@@ -38,7 +37,6 @@ function buildJs(done) {
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(gulpif(isProd, uglify()))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./build'))
     .on('end', function() {
@@ -49,6 +47,25 @@ function buildJs(done) {
   function log(out) {
     process.stdout.write(out);
   }
+}
+
+
+function buildJsProd(done) {
+  var bundler = browserify('./src/index.js', { debug: true })
+    .transform(babelify)
+    .transform(injectify)
+    .transform('brfs');
+
+  bundler
+    .bundle()
+    .pipe(plumber())
+    .pipe(source('app.js'))
+    .pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('./build'))
+    .on('end', function() {
+      done();
+    });
 }
 
 
@@ -64,8 +81,8 @@ function buildStatic() {
 }
 
 
-function watch() {
-  gulp.watch('./src/**/*.js', ['build-js']);
+function watchDev() {
+  gulp.watch('./src/**/*.js', ['_build-js-dev']);
 }
 
 
