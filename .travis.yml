@@ -16,7 +16,7 @@ after_success:
   - npm run build
   - npm i -g env-credential
   - ls -la ./node_modules/.bin
-  - git config --global credential.helper env-credential --username=GH_TOKEN
+  - git config --global credential.helper "env-credential --username=GH_TOKEN"
   - git config --global user.name $GIT_COMMIT_USER
   - git config --global user.email $GIT_COMMIT_EMAIL
   - cat ~/.gitconfig
