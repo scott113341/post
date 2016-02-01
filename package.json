@@ -12,7 +12,7 @@
     "start-dev": "npm run clean && gulp start-dev",
     "build-dev": "npm run clean && gulp build-dev",
     "build-prod": "npm run clean && gulp build-prod",
-    "deploy": "npm run build-prod && push-dir --dir build --branch gh-pages"
+    "deploy": "npm run build-prod && push-dir --dir build --branch gh-pages --cleanup"
   },
   "devDependencies": {
     "babel-polyfill": "^6.3.14",
