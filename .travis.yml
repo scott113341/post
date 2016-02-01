@@ -19,4 +19,6 @@ after_success:
   - git config --global user.name set $GIT_COMMIT_USER
   - git config --global user.email set $GIT_COMMIT_EMAIL
   - cat ~/.gitconfig
+  - git status
+  - git log -1
   - ./node_modules/.bin/push-dir --dir build --branch bb-pages
