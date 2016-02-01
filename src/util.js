@@ -195,7 +195,7 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
   const messageText = formatText(message.content);
   const fromAddressText = fromAddress ? formatAddress(fromAddress) : '';
   const toAddressText = toAddress ? formatAddress(toAddress) : '';
-  const resetCss = fs.readFileSync(__dirname + '/../static/reset.css', 'utf8');
+  const resetCss = fs.readFileSync(__dirname + '/static/reset.css', 'utf8');
 
   var svgString = `
     <svg xmlns="http://www.w3.org/2000/svg" width="${d(width)}" height="${d(height)}">

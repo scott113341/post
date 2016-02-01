@@ -15,9 +15,10 @@ var nodeStatic = require('node-static');
 
 
 gulp.task('start-dev', ['watch'], startServer);
-gulp.task('build', ['build-js']);
+gulp.task('build', ['build-js', 'build-static']);
 
 gulp.task('build-js', buildJs);
+gulp.task('build-static', buildStatic);
 gulp.task('watch', ['build'], watch);
 
 
@@ -51,13 +52,25 @@ function buildJs(done) {
 }
 
 
+function buildStatic() {
+  gulp.src([
+    './CNAME',
+    './src/index.html'
+  ]).pipe(gulp.dest('./build'));
+
+  gulp.src([
+    './src/static/**/*'
+  ]).pipe(gulp.dest('./build/static'));
+}
+
+
 function watch() {
   gulp.watch('./src/**/*.js', ['build-js']);
 }
 
 
 function startServer() {
-  var server = new nodeStatic.Server('./', { cache: false });
+  var server = new nodeStatic.Server('./build', { cache: false });
   http.createServer(function(request, response) {
     request.addListener('end', function() {
       server.serve(request, response);

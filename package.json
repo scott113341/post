@@ -4,8 +4,8 @@
   "description": "Self-contained website to send postcards via the Lob API.",
   "main": "build/app.js",
   "scripts": {
-    "start-dev": "gulp start-dev",
-    "build": "BUILD_PROD=true gulp build",
+    "start-dev": "rm -rf build && gulp start-dev",
+    "build": "BUILD_PROD=true rm -rf build && gulp build",
     "test": "exit 0",
     "deploy": "push-dir --dir build --branch gh-pages"
   },
