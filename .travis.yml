@@ -8,7 +8,7 @@ env:
   global:
     - GIT_COMMIT_USER="Travis-CI"
     - GIT_COMMIT_EMAIL="travis@travis-ci.org"
-    - secure: dotIJks7lcDsRpbkJ4TLYztCBybf3BJrOMQi8j3lsCxSa9eyzFnwkmLku+2qHS6jlkS/X0YkeG9WscxujD7ziN4tbIYfRzBy9eXwhq3xyuVfkZ8yv3kmqu49PVfYttt6BQrkOT4L1/Q4IMI98c9A0gu1URjo1E80uEzIEmLVOc5w32rsdU9Wqv5OkwZ/nt8GHO3P5g7YnzbAhpYBbUVn8mA9DYFF83d8XhDfY/YaXuIPOP/StqQ3mHycMXVERrVDZmC24XEm1M5yw58uj/GHBhxBBFxp5bL9P2hhyQ2E8A/thvwRS4+0GuG9Va4+XzonejjuNvho8W9C3j06UyVvuFBp9DlavvQ0646qrvvUmxb2b0K7+zMaLe6qNKmSBMSFGP5tetffNMCre1P0/kAhK9uGhxEb/l+BH1Zq7lcc+VZapUgPsPcX26uzDQawVyr+4RJn+fPlRL8w61APm0/16IOjjjWtNaNpyWXYuzUCgSDVS6EP+lTxT6WThK9IYsQsX3sk74prGSGl+NHKowcAZK7g1Kw3Rn7svJgpLlK49fDWKpUpLZHLXFha9W+aBpdPg94A2rRZyzOB8qqCGIFmhUic3R2RhmbnuRllLreLxjfOicl7f4OKXEOfVSIQ0MroF8eTSDFkwOkKcCD3gCqZ01iDooN4vKT5wtXfz41ARGk=
+    - secure: qVtM1y/BbIJHERkgG8UqYSxVc2JOun/hDPpgX9Vlaxx1PD1c2TxfHBCo/DaEo8B+j1iYhppwqvgimowLCtIGjlD2GM/Ey1yfqMj4kWNfTVdKSzR1a2E3KddrXqWmX53PP3a5Kw00GHVufBt2wP0kf27WndkWF1onv1n3M/iFucH6n35msmoeuNCuwTXyLAAfxW6idFm9HBfLBH5HhFiTKQmRzLj3IidYsG8uQU6EwLULmbu1+DvAB7fghpv/TyEU5m9oOJqXKD/jrTOjR3EN9qRX8KpPvj6ExjB3uLanutFW03Gp2x/6a3iaYbn2oBJ5rRId648JQT5RDVGJOdU+7etbdpDtkH6pyDNY7uH46mAj4FAeAXQzDdWUw5aMyiDjjESm+uxwEkHjNDCE+kAX87UylUDBT2aLPVWigoE6XS+rqT5prXtQ/hiEJwZD9YgcrjyEMet+XVbcVMfrSz4Yr/OqFbz/yaZLijPUVkaBMA8Rz5RHOrN6KHRJ6bJq2ZlCuhCjpJwaf1YFTV46AELw71hWp/Rfcr9ZvqbE6W1oAIQhftJx4fhOn46fX9os4LGSusiYldsmPMvN1u0RfZUMNWtyc0OLN5TPLpDR9CqS7GNYsoRtdK9MGU7lflbfmDRNQSCC4aakviHI16VOMHkHJxmkllKPvYXgdhX/aB0N+TU=
 
 script: npm run test
 
@@ -16,7 +16,7 @@ after_success:
   - npm run build
   - npm i -g env-credential
   - ls -la ./node_modules/.bin
-  - git config --global credential.helper "env-credential --username=GH_TOKEN"
+  - git config --global credential.helper "env-credential --username=GIT_USER_NAME"
   - git config --global user.name $GIT_COMMIT_USER
   - git config --global user.email $GIT_COMMIT_EMAIL
   - cat ~/.gitconfig
