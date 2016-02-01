@@ -13,6 +13,7 @@ env:
 script: npm run test
 
 after_success:
+  - npm run build
   - npm i -g env-credential
   - ls -la ./node_modules/.bin
   - git config --global credential.helper env-credential --username=GH_TOKEN
@@ -23,4 +24,4 @@ after_success:
   - git log -1
   - git rev-parse --abbrev-ref HEAD
   - git symbolic-ref --short HEAD
-  - ./node_modules/.bin/push-dir --dir build --branch bb-pages
+  - npm run deploy
