@@ -6,7 +6,7 @@
   "scripts": {
     "start-dev": "gulp start-dev",
     "build": "BUILD_PROD=true gulp build",
-    "test": "echo yee",
+    "test": "exit 0",
     "deploy": "push-dir --dir build --branch gh-pages"
   },
   "repository": {
