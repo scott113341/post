@@ -6,13 +6,13 @@ branches:
     - master
 env:
   global:
-    - GIT_COMMIT_USER: 'Travis-CI'
-    - GIT_COMMIT_EMAIL: 'travis@travis-ci.org'
+    - GIT_COMMIT_USER=Travis-CI
+    - GIT_COMMIT_EMAIL=travis@travis-ci.org
     - secure: dotIJks7lcDsRpbkJ4TLYztCBybf3BJrOMQi8j3lsCxSa9eyzFnwkmLku+2qHS6jlkS/X0YkeG9WscxujD7ziN4tbIYfRzBy9eXwhq3xyuVfkZ8yv3kmqu49PVfYttt6BQrkOT4L1/Q4IMI98c9A0gu1URjo1E80uEzIEmLVOc5w32rsdU9Wqv5OkwZ/nt8GHO3P5g7YnzbAhpYBbUVn8mA9DYFF83d8XhDfY/YaXuIPOP/StqQ3mHycMXVERrVDZmC24XEm1M5yw58uj/GHBhxBBFxp5bL9P2hhyQ2E8A/thvwRS4+0GuG9Va4+XzonejjuNvho8W9C3j06UyVvuFBp9DlavvQ0646qrvvUmxb2b0K7+zMaLe6qNKmSBMSFGP5tetffNMCre1P0/kAhK9uGhxEb/l+BH1Zq7lcc+VZapUgPsPcX26uzDQawVyr+4RJn+fPlRL8w61APm0/16IOjjjWtNaNpyWXYuzUCgSDVS6EP+lTxT6WThK9IYsQsX3sk74prGSGl+NHKowcAZK7g1Kw3Rn7svJgpLlK49fDWKpUpLZHLXFha9W+aBpdPg94A2rRZyzOB8qqCGIFmhUic3R2RhmbnuRllLreLxjfOicl7f4OKXEOfVSIQ0MroF8eTSDFkwOkKcCD3gCqZ01iDooN4vKT5wtXfz41ARGk=
 
 script: npm run test
 
-pre-deploy:
+before_deploy:
   - git config --global credential.helper ./node_modules/env-credential.js --username=GH_TOKEN
   - git config --global user.name set $GIT_COMMIT_USER
   - git config --global user.email set $GIT_COMMIT_EMAIL
