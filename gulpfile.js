@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var plumber = require('gulp-plumber');
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
+var uglifyify = require('uglifyify');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 
@@ -51,10 +52,13 @@ function buildJsDev(done) {
 
 
 function buildJsProd(done) {
-  var bundler = browserify('./src/index.js', { debug: true })
+  process.env.NODE_ENV = 'production';
+
+  var bundler = browserify('./src/index.js')
     .transform(babelify)
     .transform(injectify)
-    .transform('brfs');
+    .transform('brfs')
+    .transform({ global: true }, 'uglifyify');
 
   bundler
     .bundle()
