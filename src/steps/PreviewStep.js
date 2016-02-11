@@ -23,7 +23,7 @@ export default class PreviewStep extends React.Component {
     if (!preview.backData.length) {
       const fromAddress = address.addresses[address.selectedFromIndex];
       const toAddress = address.addresses[address.selectedToIndex];
-      const backData = await drawBack(selectedSize, message, 600, fromAddress, toAddress);
+      const backData = await drawBack(selectedSize, message, 100, fromAddress, toAddress);
       this.props.actions.changePreviewImage('back', backData);
     }
   }
