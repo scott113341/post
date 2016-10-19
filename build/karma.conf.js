@@ -1,9 +1,9 @@
-const argv = require('yargs').argv
-const config = require('../config')
-const webpackConfig = require('./webpack.config')
-const debug = require('debug')('app:karma')
+const argv = require('yargs').argv;
+const config = require('../config');
+const webpackConfig = require('./webpack.config');
+const debug = require('debug')('app:karma');
 
-debug('Creating configuration.')
+debug('Creating configuration.');
 const karmaConfig = {
   basePath : '../', // project root in relation to bin/karma.js
   files    : [
@@ -55,10 +55,10 @@ const karmaConfig = {
   coverageReporter : {
     reporters : config.coverage_reporters
   }
-}
+};
 
 if (config.globals.__COVERAGE__) {
-  karmaConfig.reporters.push('coverage')
+  karmaConfig.reporters.push('coverage');
   karmaConfig.webpack.module.preLoaders = [{
     test    : /\.(js|jsx)$/,
     include : new RegExp(config.dir_client),
@@ -66,7 +66,7 @@ if (config.globals.__COVERAGE__) {
     query   : Object.assign({}, config.compiler_babel, {
       plugins : (config.compiler_babel.plugins || []).concat('istanbul')
     })
-  }]
+  }];
 }
 
-module.exports = (cfg) => cfg.set(karmaConfig)
+module.exports = (cfg) => cfg.set(karmaConfig);
