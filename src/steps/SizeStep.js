@@ -5,7 +5,7 @@ import { formatPrice } from '../util.js';
 
 export default class SizeStep extends React.Component {
 
-  render() {
+  render () {
     const size = this.props.postcard.size;
     const disabled = !this.isValid();
 
@@ -24,11 +24,11 @@ export default class SizeStep extends React.Component {
     );
   }
 
-  isValid() {
+  isValid () {
     return this.props.postcard.size.selectedIndex >= 0;
   }
 
-  handleSizeSelectChange(e) {
+  handleSizeSelectChange (e) {
     this.props.actions.changeSelectedSize(e.target.value);
   }
 

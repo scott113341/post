@@ -9,7 +9,7 @@ import { Header } from '../components/index.js';
 import * as postcard from '../store/postcard.js';
 
 export const StepLayout = props => {
-  return  (
+  return (
     <div>
       <Header />
       <div className={styles.container}>

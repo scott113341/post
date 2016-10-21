@@ -7,7 +7,7 @@ import { drawFront, drawBack } from '../util.js';
 
 export default class PreviewStep extends React.Component {
 
-  async componentDidMount() {
+  async componentDidMount () {
     const { size, preview, address } = this.props.postcard;
     const selectedSize = size.sizes[size.selectedIndex];
     const frontImg = this.props.postcard.image.data;
@@ -26,7 +26,7 @@ export default class PreviewStep extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const preview = this.props.postcard.preview;
     const disabled = !this.isValid();
 
@@ -42,7 +42,7 @@ export default class PreviewStep extends React.Component {
       [styles.image]: true,
       [styles.hide]: preview.side !== 'back' || this.isLoading()
     });
-    const backImg =  r('img', { className: backClassNames, src: preview.backData });
+    const backImg = r('img', { className: backClassNames, src: preview.backData });
 
     const sideGroup = !this.isLoading() ?
       r('div', null,
@@ -67,16 +67,16 @@ export default class PreviewStep extends React.Component {
     );
   }
 
-  handleFlipClick() {
+  handleFlipClick () {
     const newSide = this.props.postcard.preview.side === 'front' ? 'back' : 'front';
     this.props.changeSelectedPreviewSide(newSide);
   }
 
-  isLoading() {
+  isLoading () {
     return !this.isValid();
   }
 
-  isValid() {
+  isValid () {
     const preview = this.props.postcard.preview;
 
     return (
@@ -85,7 +85,6 @@ export default class PreviewStep extends React.Component {
     );
   }
 }
-
 
 export const styles = csjs`
   .image {

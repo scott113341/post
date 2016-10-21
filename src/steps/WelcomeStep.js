@@ -4,7 +4,7 @@ import { Link, Spacer, Step } from '../components/index.js';
 
 export default class WelcomeStep extends React.Component {
 
-  render() {
+  render () {
     console.log(this);
 
     return r(Step, { title: 'welcome to post' },

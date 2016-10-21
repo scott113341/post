@@ -4,7 +4,7 @@ import csjs from 'csjs-inject';
 import { buttonBackgroundColor } from '../styles/constants';
 
 const Button = props => (
-  <button className={styles.button} {...props} />
+  r('button', { className: styles.button, ...props })
 );
 
 const styles = csjs`

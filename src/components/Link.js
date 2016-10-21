@@ -1,13 +1,14 @@
 import classnames from 'classnames';
 import csjs from 'csjs-inject';
-import React from 'react';
+import React, { createElement as r } from 'react';
 import { Link } from 'react-router';
 
 import { buttonBackgroundColor } from '../styles/constants';
 
-const PostLink = ({ disabled, ...rest }) => (
-  <Link className={classnames({ [styles.button]: true, [styles.disabled]: disabled })} {...rest} />
-);
+const PostLink = ({ disabled, ...rest }) => {
+  const className = classnames({ [styles.button]: true, [styles.disabled]: disabled });
+  return r(Link, { className, ...rest });
+};
 
 const styles = csjs`
   .button {
@@ -28,7 +29,5 @@ const styles = csjs`
     pointer-events: none;
   }
 `;
-
-console.log(styles);
 
 export default PostLink;

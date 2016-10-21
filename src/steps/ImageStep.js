@@ -5,14 +5,14 @@ import { Button, Link, Spacer, Step } from '../components/index.js';
 
 export default class ImageStep extends React.Component {
 
-  render() {
+  render () {
     const image = this.props.postcard.image;
     const disabled = !this.isValid();
 
     const img = image.data.length ? r('div', null,
       r(Spacer, { height: '20px' }),
       r('img', { className: styles.image, src: image.data })
-    ): null;
+    ) : null;
 
     return r(Step, { title: 'choose a photo' },
       r(Button, { onClick: this.handleBrowseButtonClick.bind(this) }, 'browse'),
@@ -26,15 +26,15 @@ export default class ImageStep extends React.Component {
     );
   }
 
-  isValid() {
+  isValid () {
     return this.props.postcard.image.data.indexOf('data:image') === 0;
   }
 
-  handleBrowseButtonClick(e) {
+  handleBrowseButtonClick (e) {
     this.refs.file.click();
   }
 
-  handleImageLoad(e) {
+  handleImageLoad (e) {
     this.props.changeImageData('');
     var reader = new FileReader();
     var file = e.target.files[0];

@@ -4,11 +4,9 @@ import getCss from 'csjs/get-css';
 
 import resetCss from './styles/reset-css.js';
 
-
-export function clone() {
+export function clone () {
   return Object.assign({}, ...arguments);
 }
-
 
 /**
  * Attempts to load a JSON value from localStorage.
@@ -16,7 +14,7 @@ export function clone() {
  * @param defaultValue The default value returned if item is not found.
  * @returns {*}
  */
-export function getFromLocalStorage(key, defaultValue=null) {
+export function getFromLocalStorage (key, defaultValue = null) {
   var value = localStorage.getItem(key);
   try {
     value = JSON.parse(value);
@@ -26,18 +24,16 @@ export function getFromLocalStorage(key, defaultValue=null) {
   return isStored ? value : defaultValue;
 }
 
-
 /**
  * Formats a number into US dollars.
  * @param {number} price The amount to be formatted.
  * @returns {string}
  */
-export function formatPrice(price) {
+export function formatPrice (price) {
   return `$${price.toFixed(2)}`;
 }
 
-
-export async function orderPostcard(apiKey, to, from, size, front, back) {
+export async function orderPostcard (apiKey, to, from, size, front, back) {
   const LOB_ENDPOINT = 'https://api.lob.com/v1/postcards';
 
   return new Promise(resolve => {
@@ -64,10 +60,10 @@ export async function orderPostcard(apiKey, to, from, size, front, back) {
       var request = new XMLHttpRequest();
       request.addEventListener('load', requestFinished);
       request.open('POST', LOB_ENDPOINT, true);
-      request.setRequestHeader('Authorization', `Basic ${btoa(apiKey+':')}`);
+      request.setRequestHeader('Authorization', `Basic ${btoa(apiKey + ':')}`);
       request.send(form);
 
-      function requestFinished(e) {
+      function requestFinished (e) {
         resolve(e.target);
       }
     }
@@ -77,10 +73,9 @@ export async function orderPostcard(apiKey, to, from, size, front, back) {
   });
 }
 
-
-export async function drawFront(size, imgData, dpi) {
+export async function drawFront (size, imgData, dpi) {
   const { width, height } = size;
-  function d(distance) {
+  function d (distance) {
     return distance * dpi;
   }
 
@@ -118,11 +113,10 @@ export async function drawFront(size, imgData, dpi) {
   return canvas.toDataURL();
 }
 
-
-export async function drawBack(size, message, dpi, fromAddress=null, toAddress=null) {
+export async function drawBack (size, message, dpi, fromAddress = null, toAddress = null) {
   const { width, height, textWidth } = size;
   const showAddresses = fromAddress && toAddress;
-  function d(distance) {
+  function d (distance) {
     return distance * dpi;
   }
 
@@ -141,7 +135,7 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
     }
 
     .message {
-      font-size: ${d(message.fontSize/100)}px;
+      font-size: ${d(message.fontSize / 100)}px;
       font-family: ${message.font};
     }
 
@@ -153,7 +147,7 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
       left: ${d(size.addressLeft)}px;
       top: ${d(size.addressTop)}px;
       border: ${d(0.01)}px solid black;
-      font-size: ${d(message.fontSize/100)}px;
+      font-size: ${d(message.fontSize / 100)}px;
     }
 
     .addressText {
@@ -165,13 +159,13 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
     .fromAddress extends .addressText {
       left: ${d(size.addressesLeft)}px;
       top: ${d(0.266)}px;
-      font-size: ${d(11/100)}px;
+      font-size: ${d(11 / 100)}px;
     }
 
     .toAddress extends .addressText {
       left: ${d(size.addressesLeft)}px;
       top: ${d(1.339)}px;
-      font-size: ${d(14/100)}px;
+      font-size: ${d(14 / 100)}px;
     }
 
     .postage extends .addressText {
@@ -229,8 +223,7 @@ export async function drawBack(size, message, dpi, fromAddress=null, toAddress=n
   return canvas.toDataURL();
 }
 
-
-export async function rotateImageToLandscape(data) {
+export async function rotateImageToLandscape (data) {
   try {
     return new Promise(async resolve => {
       // return loaded image if already landscape
@@ -245,7 +238,7 @@ export async function rotateImageToLandscape(data) {
       // draw image on rotated canvas
       var ctx = canvas.getContext('2d');
       ctx.save();
-      ctx.translate(canvas.width, canvas.height/canvas.width);
+      ctx.translate(canvas.width, canvas.height / canvas.width);
       ctx.rotate(Math.PI / 2);
       ctx.drawImage(img, 0, 0);
       ctx.restore();
@@ -261,8 +254,7 @@ export async function rotateImageToLandscape(data) {
   }
 }
 
-
-export async function loadImageFromData(data) {
+export async function loadImageFromData (data) {
   return new Promise(resolve => {
     var img = new Image();
     img.src = data;

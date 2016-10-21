@@ -4,7 +4,7 @@ import { Cell, Link, NewAddressModal, Spacer, Step } from '../components/index.j
 
 export default class ToAddressStep extends React.Component {
 
-  render() {
+  render () {
     const address = this.props.postcard.address;
     const disabled = !this.isValid();
 
@@ -38,25 +38,25 @@ export default class ToAddressStep extends React.Component {
     );
   }
 
-  isValid() {
+  isValid () {
     return this.props.postcard.address.selectedToIndex >= 0;
   }
 
-  handleClickAddress(index) {
+  handleClickAddress (index) {
     this.props.changeSelectedAddress('to', index);
   }
 
-  handleClickNewAddress() {
+  handleClickNewAddress () {
     this.props.changeSelectedAddress('to', -1);
     this.props.showNewAddressModal(true);
   }
 
-  handleClickCancelModal() {
+  handleClickCancelModal () {
     console.log('cancel');
     this.props.showNewAddressModal(false);
   }
 
-  handleClickSaveModal(address) {
+  handleClickSaveModal (address) {
     this.props.addAddress(address);
     const newAddressIndex = this.props.postcard.address.addresses.length;
     this.props.changeSelectedAddress('to', newAddressIndex);

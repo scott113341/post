@@ -4,7 +4,7 @@ import { Input, Link, Spacer, Step } from '../components/index.js';
 
 export default class LobStep extends React.Component {
 
-  render() {
+  render () {
     const apiKey = this.props.postcard.lob.apiKey;
     const disabled = !this.isValid();
 
@@ -21,11 +21,11 @@ export default class LobStep extends React.Component {
     );
   }
 
-  isValid() {
+  isValid () {
     return this.props.postcard.lob.apiKey.length === 40;
   }
 
-  handleApiKeyInputChange(apiKey) {
+  handleApiKeyInputChange (apiKey) {
     this.props.changeLobApiKey(apiKey);
   }
 

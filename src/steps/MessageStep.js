@@ -5,7 +5,7 @@ import { Link, Spacer, Step } from '../components/index.js';
 
 export default class MessageStep extends React.Component {
 
-  render() {
+  render () {
     const message = this.props.postcard.message;
 
     return r(Step, { title: 'write message' },
@@ -17,7 +17,7 @@ export default class MessageStep extends React.Component {
     );
   }
 
-  handleInputChange(e) {
+  handleInputChange (e) {
     this.props.changeMessage(e.target.value);
   }
 

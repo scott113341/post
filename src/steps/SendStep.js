@@ -6,7 +6,7 @@ import { drawFront, drawBack, orderPostcard } from '../util.js';
 
 export default class FromAddressStep extends React.Component {
 
-  async componentDidMount() {
+  async componentDidMount () {
     this.props.changeSendingStatus(true);
 
     const postcard = this.props.postcard;
@@ -33,7 +33,7 @@ export default class FromAddressStep extends React.Component {
     }
   }
 
-  render() {
+  render () {
     const send = this.props.postcard.send;
     const disabled = !this.isValid();
 
@@ -54,17 +54,17 @@ export default class FromAddressStep extends React.Component {
     );
   }
 
-  didSucceed() {
+  didSucceed () {
     const send = this.props.postcard.send;
     return !send.isSending && send.didSend && !send.response.length;
   }
 
-  didError() {
+  didError () {
     const send = this.props.postcard.send;
     return !send.isSending && send.didSend && send.response.length;
   }
 
-  isValid() {
+  isValid () {
     return this.didSucceed();
   }
 
