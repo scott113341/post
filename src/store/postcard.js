@@ -115,6 +115,20 @@ export const initialState = {
         postageLeft: 2.208
       },
       {
+        name: '6x9',
+        display: '6"x9"',
+        price: 1.35,
+        width: 9.25,
+        height: 6.25,
+        textWidth: 2.45,
+        addressWidth: 4,
+        addressHeight: 2.375,
+        addressLeft: 4.972,
+        addressTop: 3.625,
+        addressesLeft: 0.528,
+        postageLeft: 2.917
+      },
+      {
         name: '6x11',
         display: '6"x11"',
         price: 1.50,

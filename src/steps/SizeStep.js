@@ -29,7 +29,7 @@ export default class SizeStep extends React.Component {
   }
 
   handleSizeSelectChange (e) {
-    this.props.actions.changeSelectedSize(e.target.value);
+    this.props.changeSelectedSize(e.target.value);
   }
 
 }
