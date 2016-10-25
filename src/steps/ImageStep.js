@@ -1,6 +1,7 @@
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
 
+import { loadImageFromData } from '../util.js';
 import { Button, Link, Spacer, Step } from '../components/index.js';
 
 export default class ImageStep extends React.Component {
@@ -17,9 +18,7 @@ export default class ImageStep extends React.Component {
     return r(Step, { title: 'choose a photo' },
       r(Button, { onClick: this.handleBrowseButtonClick.bind(this) }, 'browse'),
       r('input', { className: styles.input, ref: 'file', type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }),
-
       img,
-
       r(Spacer),
       r(Link, { to: '/size' }, 'back'),
       r(Link, { to: '/message', disabled }, 'next')
@@ -34,13 +33,18 @@ export default class ImageStep extends React.Component {
     this.refs.file.click();
   }
 
-  handleImageLoad (e) {
-    this.props.changeImageData('');
-    var reader = new FileReader();
-    var file = e.target.files[0];
+  async handleImageLoad (e) {
+    this.props.changeImage(this.props.postcard.initialState.image);
+    const reader = new FileReader();
+    const file = e.target.files[0];
     reader.readAsDataURL(file);
-    reader.onload = upload => {
-      this.props.changeImageData(upload.target.result);
+    reader.onload = async upload => {
+      const image = await loadImageFromData(upload.target.result);
+      this.props.changeImage({
+        data: upload.target.result,
+        width: image.width,
+        height: image.height
+      });
     };
   }
 
@@ -49,8 +53,6 @@ export default class ImageStep extends React.Component {
 export const styles = csjs`
   .input {
     border: none;
-    width: 0.1px;
-    height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
@@ -58,7 +60,7 @@ export const styles = csjs`
   }
 
   .image {
-    max-width: 100%;
     max-height: 300px;
+    max-width: 100%;
   }
 `;

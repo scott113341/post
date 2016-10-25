@@ -1,36 +1,33 @@
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
+import ReactDomServer from 'react-dom/server';
 
+import { orderPostcard } from '../util.js';
 import { Link, Spacer, Spinner, Step } from '../components/index.js';
-import { drawFront, drawBack, orderPostcard } from '../util.js';
+import renderBack from '../lib/render-back';
+import renderFront from '../lib/render-front';
 
-export default class FromAddressStep extends React.Component {
+export default class SendStep extends React.Component {
 
   async componentDidMount () {
     this.props.changeSendingStatus(true);
 
     const postcard = this.props.postcard;
-    const apiKey = postcard.lob.apiKey;
-    const to = postcard.address.addresses[postcard.address.selectedToIndex];
-    const from = postcard.address.addresses[postcard.address.selectedFromIndex];
+    const { address, image, message, preview  } = postcard;
     const size = postcard.size.sizes[postcard.size.selectedIndex];
+    const fromAddress = address.addresses[address.selectedFromIndex];
+    const toAddress = address.addresses[address.selectedToIndex];
+    const apiKey = postcard.lob.apiKey;
     const sizeName = size.name;
-    const frontImg = postcard.image.data;
-    const message = postcard.message;
-    const dpi = 600;
 
-    const frontData = await drawFront(size, frontImg, dpi);
-    const backData = await drawBack(size, message, dpi);
-    const res = await orderPostcard(apiKey, to, from, sizeName, frontData, backData);
+    const frontData = ReactDomServer.renderToStaticMarkup(renderFront({ image, size }));
+    const backData = ReactDomServer.renderToStaticMarkup(renderBack({ size, message, fromAddress, toAddress }));
+    const res = await orderPostcard(apiKey, toAddress, fromAddress, sizeName, frontData, backData);
 
     this.props.changeSendingStatus(false);
     this.props.changeSentStatus(true);
-    if (res.status === 200) {
-      this.props.changeResponseStatus('');
-    }
-    else {
-      this.props.changeResponseStatus(res.responseText);
-    }
+    if (res.status === 200) this.props.changeResponseStatus('');
+    else this.props.changeResponseStatus(res.responseText);
   }
 
   render () {
@@ -42,12 +39,10 @@ export default class FromAddressStep extends React.Component {
     const error = this.didError() ? r('pre', { className: styles.error }, send.response) : null;
 
     return r(Step, { title: 'sending postcard' },
-      r(Spacer, { height: '20px' }),
-
+      r(Spacer, { height: '15px' }),
       spinner,
       success,
       error,
-
       r(Spacer),
       r(Link, { to: '/preview' }, 'back'),
       r(Link, { to: '/', disabled }, 'start over')
@@ -76,11 +71,11 @@ export const styles = csjs`
   }
 
   .error {
-    padding: 5px;
-    text-align: left;
     background: #ddd;
     font-family: monospace;
     font-size: 12px;
+    padding: 5px;
+    text-align: left;
     white-space: pre-wrap;
   }
 `;

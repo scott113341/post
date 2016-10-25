@@ -1,69 +1,50 @@
-import classNames from 'classnames';
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
+import Frame from 'react-frame-component';
 
-import { Button, IFrame, Link, Spacer, Spinner, Step } from '../components/index.js';
-import { drawFront, drawBack } from '../util.js';
+import { Button, IFrame, Link, Spacer, Step } from '../components/index.js';
+import renderBack from '../lib/render-back';
+import renderFront from '../lib/render-front';
 
 export default class PreviewStep extends React.Component {
 
-  async componentDidMount () {
-    const { size, preview, address } = this.props.postcard;
-    const selectedSize = size.sizes[size.selectedIndex];
-    const frontImg = this.props.postcard.image.data;
-    const message = this.props.postcard.message;
-
-    if (!preview.frontData.length) {
-      const frontData = await drawFront(selectedSize, frontImg, 100);
-      this.props.changePreviewImage('front', frontData);
-    }
-
-    if (!preview.backData.length) {
-      const fromAddress = address.addresses[address.selectedFromIndex];
-      const toAddress = address.addresses[address.selectedToIndex];
-      const backData = await drawBack(selectedSize, message, 100, fromAddress, toAddress);
-      this.props.changePreviewImage('back', backData);
-    }
-  }
-
   render () {
-    const preview = this.props.postcard.preview;
-    const disabled = !this.isValid();
+    const { address, image, message, preview  } = this.props.postcard;
+    const size = this.props.postcard.size.sizes[this.props.postcard.size.selectedIndex];
+    const fromAddress = address.addresses[address.selectedFromIndex];
+    const toAddress = address.addresses[address.selectedToIndex];
 
-    const spinner = this.isLoading() ? r(Spinner) : null;
+    const scale = 300 / 100 / size.height;
+    const topBottom = -(size.height * 100 - size.height * 100 * scale) / 2;
+    const leftRight = -(size.width  * 100 - size.width  * 100 * scale) / 2;
+    const styles = csjs`
+      .frame {
+        border: 1px solid black;
+        margin: ${topBottom}px ${leftRight}px;
+        transform: scale(${scale}, ${scale});
+      }
+    
+      .sideLabel {
+        font-style: italic;
+      }
+    `;
 
-    const frontClassNames = classNames({
-      [styles.image]: true,
-      [styles.hide]: preview.side !== 'front' || this.isLoading()
-    });
-    const frontImg = r('img', { className: frontClassNames, src: preview.frontData });
+    const render = preview.side === 'front'
+      ? renderFront({ image, size, isPreview: true })
+      : renderBack({ size, message, fromAddress, toAddress, isPreview: true });
 
-    const backClassNames = classNames({
-      [styles.image]: true,
-      [styles.hide]: preview.side !== 'back' || this.isLoading()
-    });
-    const backImg = r('img', { className: backClassNames, src: preview.backData });
-
-    const sideGroup = !this.isLoading() ?
+    return r(Step, { title: 'preview postcard' },
+      r(Spacer, { height: '5px' }),
+      r(Frame, { className: styles.frame, width: size.width * 100, height: size.height * 100 }, render),
+      r(Spacer, { height: '5px' }),
       r('div', null,
-        r(Spacer, { height: '5px' }),
         r('p', { className: styles.sideLabel }, preview.side),
         r(Spacer, { height: '5px' }),
         r(Button, { onClick: this.handleFlipClick.bind(this) }, 'flip')
-      )
-      : null;
-
-    return r(Step, { title: 'preview postcard' },
-      r(Spacer, { height: '20px' }),
-      spinner,
-      frontImg,
-      backImg,
-
-      sideGroup,
-
+      ),
       r(Spacer),
       r(Link, { to: '/to' }, 'back'),
-      r(Link, { to: '/send', disabled }, 'next')
+      r(Link, { to: '/send' }, 'next')
     );
   }
 
@@ -72,33 +53,4 @@ export default class PreviewStep extends React.Component {
     this.props.changeSelectedPreviewSide(newSide);
   }
 
-  isLoading () {
-    return !this.isValid();
-  }
-
-  isValid () {
-    const preview = this.props.postcard.preview;
-
-    return (
-      preview.frontData.length &&
-      preview.backData.length
-    );
-  }
 }
-
-export const styles = csjs`
-  .image {
-    box-sizing: border-box;
-    border: 1px solid black;
-    max-width: 100%;
-    max-height: 300px;
-  }
-
-  .hide {
-    display: none;
-  }
-
-  .sideLabel {
-    font-style: italic;
-  }
-`;
