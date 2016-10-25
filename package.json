@@ -127,6 +127,7 @@
     "mocha": "^3.0.1",
     "nodemon": "^1.10.2",
     "phantomjs-prebuilt": "^2.1.12",
+    "push-dir": "^0.2.2",
     "react-addons-test-utils": "^15.0.0",
     "redbox-react": "^1.2.10",
     "sinon": "^1.17.5",
