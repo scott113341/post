@@ -1,7 +1,7 @@
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
 
-import { loadImageFromData } from '../util.js';
+import { loadFileAsDataUrl, loadImageFromData, promisify } from '../util.js';
 import { Button, Link, Spacer, Step } from '../components/index.js';
 
 export default class ImageStep extends React.Component {
@@ -35,17 +35,14 @@ export default class ImageStep extends React.Component {
 
   async handleImageLoad (e) {
     this.props.changeImage(this.props.postcard.initialState.image);
-    const reader = new FileReader();
     const file = e.target.files[0];
-    reader.readAsDataURL(file);
-    reader.onload = async upload => {
-      const image = await loadImageFromData(upload.target.result);
-      this.props.changeImage({
-        data: upload.target.result,
-        width: image.width,
-        height: image.height
-      });
-    };
+    const data = await loadFileAsDataUrl(file);
+    const image = await loadImageFromData(data);
+    this.props.changeImage({
+      data,
+      width: image.width,
+      height: image.height
+    });
   }
 
 }

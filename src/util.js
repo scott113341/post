@@ -74,3 +74,22 @@ export async function loadImageFromData (data) {
     img.onload = () => resolve(img);
   });
 }
+
+export function loadFileAsDataUrl (file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.readAsDataURL(file);
+  });
+}
+
+export function promisify(fn, thisArg = null) {
+  return (...args) => {
+    return new Promise((resolve, reject) => {
+      fn.call(thisArg, ...args, (err, data) => {
+        if (err) return reject(err);
+        return resolve(data);
+      });
+    });
+  };
+}
