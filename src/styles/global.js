@@ -11,9 +11,10 @@ export default csjs`
 
   input {
     border: 1px solid #ddd;
-    width: 100%;
-    text-align: center;
+    box-sizing: border-box;
     font-size: ${c.fontSize};
+    text-align: center;
+    width: 100%;
   }
 
   select {

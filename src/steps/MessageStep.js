@@ -25,7 +25,8 @@ export default class MessageStep extends React.Component {
 
 export const styles = csjs`
   .textarea {
-    width: 100%;
+    box-sizing: border-box;
     height: 200px;
+    width: 100%;
   }
 `;
