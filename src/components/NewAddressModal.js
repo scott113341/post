@@ -20,7 +20,7 @@ export default class NewAddressModal extends React.Component {
       r('input', { className, ref: 'addressLine2', placeholder: 'address line 2', autoComplete: 'shipping address-line2' }),
       r('input', { className, ref: 'addressCity', placeholder: 'city', autoComplete: 'shipping address-level2' }),
       r('input', { className, ref: 'addressState', placeholder: 'state abbreviation', autoCapitalize: 'characters', autoComplete: 'shipping address-level1' }),
-      r('input', { className, ref: 'addressZip', placeholder: 'zip', type: 'number', autoComplete: 'shipping postal-code' }),
+      r('input', { className, ref: 'addressZip', placeholder: 'zip', type: 'number', autoCapitalize: 'characters', autoComplete: 'shipping postal-code' }),
 
       r(Spacer),
       r(Button, { onClick: this.handleCancelClick.bind(this) }, 'cancel'),
