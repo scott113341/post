@@ -24,7 +24,7 @@ export default function renderFront ({ image, size, isPreview = false, scale = 1
   }
 
   return (
-    <div>
+    <div style={{ fontSize: 0 }}>
       <style>{resetCss}</style>
       <svg
         xmlns="http://www.w3.org/2000/svg"
