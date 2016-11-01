@@ -8,8 +8,6 @@ export default class LobStep extends React.Component {
     const apiKey = this.props.postcard.lob.apiKey;
     const disabled = !this.isValid();
 
-    console.log(this);
-
     return r(Step, { title: 'lob account' },
       r('p', null, 'enter your lob api key'),
       r(Spacer, { height: '10px' }),
