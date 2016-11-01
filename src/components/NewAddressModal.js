@@ -15,12 +15,12 @@ export default class NewAddressModal extends React.Component {
     const className = styles.input;
 
     return this.props.show ? r(Modal, { title: 'new address' },
-      r('input', { className, ref: 'addressName', placeholder: 'name', autoCapitalize: 'words' }),
-      r('input', { className, ref: 'addressLine1', placeholder: 'address line 1', autoCapitalize: 'words' }),
-      r('input', { className, ref: 'addressLine2', placeholder: 'address line 2', autoCapitalize: 'words' }),
-      r('input', { className, ref: 'addressCity', placeholder: 'city', autoCapitalize: 'words' }),
-      r('input', { className, ref: 'addressState', placeholder: 'state abbreviation', autoCapitalize: 'characters' }),
-      r('input', { className, ref: 'addressZip', placeholder: 'zip', type: 'number' }),
+      r('input', { className, ref: 'addressName', placeholder: 'name', autoComplete: 'shipping name' }),
+      r('input', { className, ref: 'addressLine1', placeholder: 'address line 1', autoComplete: 'shipping address-line1' }),
+      r('input', { className, ref: 'addressLine2', placeholder: 'address line 2', autoComplete: 'shipping address-line2' }),
+      r('input', { className, ref: 'addressCity', placeholder: 'city', autoComplete: 'shipping address-level2' }),
+      r('input', { className, ref: 'addressState', placeholder: 'state abbreviation', autoCapitalize: 'characters', autoComplete: 'shipping address-level1' }),
+      r('input', { className, ref: 'addressZip', placeholder: 'zip', type: 'number', autoComplete: 'shipping postal-code' }),
 
       r(Spacer),
       r(Button, { onClick: this.handleCancelClick.bind(this) }, 'cancel'),
