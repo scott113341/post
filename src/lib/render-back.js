@@ -6,7 +6,6 @@ import resetCss from '../styles/reset-css.js';
 
 export default function renderBack ({ size, message, fromAddress = null, toAddress = null, isPreview = false, scale = 100, ...props }) {
   const showAddresses = fromAddress && toAddress && isPreview;
-  console.log({ fromAddress, toAddress, isPreview });
   const d = v => (v * scale).toFixed(6);
   const px = size.floatBox[0];
   const py = size.floatBox[1];
