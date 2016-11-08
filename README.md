@@ -33,10 +33,10 @@ Some code things used in `post`:
 [build-status-href]: https://travis-ci.org/scott113341/post
 
 [dependencies-badge]: https://img.shields.io/david/scott113341/post/master.svg?style=flat-square
-[dependencies-href]: https://david-dm.org/scott113341/post/master#info=dependencies
+[dependencies-href]: https://david-dm.org/scott113341/post/master
 
 [dev-dependencies-badge]: https://img.shields.io/david/dev/scott113341/post/master.svg?style=flat-square
-[dev-dependencies-href]: https://david-dm.org/scott113341/post/master#info=devDependencies
+[dev-dependencies-href]: https://david-dm.org/scott113341/post/master?type=dev
 
 [post-href]: https://post.scotthardy.me
 [lob-href]: https://lob.com
