@@ -20,9 +20,7 @@ Some code things used in `post`:
 * React + Redux
 * [csjs][csjs-href]
 * Babel
-* SVG + Canvas + Data URIs
 * Travis CI deployment to GitHub Pages
-* Ye olde `new XMLHttpRequest();`
 * [Waffle.io][waffle-href] for organization
 
 
