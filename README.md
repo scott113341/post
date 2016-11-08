@@ -1,8 +1,9 @@
 # [post][post-href]
 
-[![Version][version-badge]][version-href]
-[![Build status][build-badge]][build-href]
-[![Dependencies][deps-badge]][deps-href]
+[![version][version-badge]][version-href]
+[![build-status][build-status-badge]][build-status-href]
+[![dependencies][dependencies-badge]][dependencies-href]
+[![dev-dependencies][dev-dependencies-badge]][dev-dependencies-href]
 
 
 ## inspiration
@@ -28,11 +29,14 @@ Some code things used in `post`:
 [version-badge]: https://img.shields.io/github/tag/scott113341/post.svg?label=version&style=flat-square
 [version-href]: https://github.com/scott113341/post/tags
 
-[build-badge]: https://img.shields.io/travis/scott113341/post.svg?style=flat-square
-[build-href]: https://travis-ci.org/scott113341/post
+[build-status-badge]: https://img.shields.io/travis/scott113341/post.svg?style=flat-square
+[build-status-href]: https://travis-ci.org/scott113341/post
 
-[deps-badge]: https://img.shields.io/david/dev/scott113341/post.svg?style=flat-square
-[deps-href]: https://david-dm.org/scott113341/post#info=devDependencies
+[dependencies-badge]: https://img.shields.io/david/scott113341/my-really-fast-module/master.svg?style=flat-square
+[dependencies-href]: https://david-dm.org/scott113341/my-really-fast-module/master#info=dependencies
+
+[dev-dependencies-badge]: https://img.shields.io/david/dev/scott113341/my-really-fast-module/master.svg?style=flat-square
+[dev-dependencies-href]: https://david-dm.org/scott113341/my-really-fast-module/master#info=devDependencies
 
 [post-href]: https://post.scotthardy.me
 [lob-href]: https://lob.com
