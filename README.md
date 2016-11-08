@@ -32,11 +32,11 @@ Some code things used in `post`:
 [build-status-badge]: https://img.shields.io/travis/scott113341/post.svg?style=flat-square
 [build-status-href]: https://travis-ci.org/scott113341/post
 
-[dependencies-badge]: https://img.shields.io/david/scott113341/my-really-fast-module/master.svg?style=flat-square
-[dependencies-href]: https://david-dm.org/scott113341/my-really-fast-module/master#info=dependencies
+[dependencies-badge]: https://img.shields.io/david/scott113341/post/master.svg?style=flat-square
+[dependencies-href]: https://david-dm.org/scott113341/post/master#info=dependencies
 
-[dev-dependencies-badge]: https://img.shields.io/david/dev/scott113341/my-really-fast-module/master.svg?style=flat-square
-[dev-dependencies-href]: https://david-dm.org/scott113341/my-really-fast-module/master#info=devDependencies
+[dev-dependencies-badge]: https://img.shields.io/david/dev/scott113341/post/master.svg?style=flat-square
+[dev-dependencies-href]: https://david-dm.org/scott113341/post/master#info=devDependencies
 
 [post-href]: https://post.scotthardy.me
 [lob-href]: https://lob.com
