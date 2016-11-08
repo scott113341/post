@@ -83,7 +83,7 @@ export default function renderBack ({ size, message, fromAddress = null, toAddre
     <div>
       <div id="fake"></div>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
-      <style>{resetCss}</style>
+      <style dangerouslySetInnerHTML={{ __html: resetCss }} />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={d(size.width)}
@@ -91,7 +91,7 @@ export default function renderBack ({ size, message, fromAddress = null, toAddre
         viewBox={`0 0 ${d(size.width)} ${d(size.height)}`}
         {...props}>
         <foreignObject width={d(size.width)} height={d(size.height)}>
-          <style>{getCss(styles)}</style>
+          <style dangerouslySetInnerHTML={{ __html: getCss(styles) }} />
           <div xmlns="http://www.w3.org/1999/xhtml">
             <div className={styles.container}>
               <div className={styles.textContainer}>

@@ -164,7 +164,7 @@ export const initialState = {
   },
   message: {
     content: '',
-    font: 'Helvetica',
+    font: 'Open Sans',
     fontSize: 14
   },
   address: {

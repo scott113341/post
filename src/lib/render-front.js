@@ -25,7 +25,7 @@ export default function renderFront ({ image, size, isPreview = false, scale = 1
 
   return (
     <div style={{ fontSize: 0 }}>
-      <style>{resetCss}</style>
+      <style dangerouslySetInnerHTML={{ __html: resetCss }} />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width={d(width)}
