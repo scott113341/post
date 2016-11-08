@@ -1,7 +1,7 @@
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
 
-import { loadFileAsDataUrl, loadImageFromData, promisify } from '../util.js';
+import { loadFileAsDataUrl, loadImageFromData } from '../util.js';
 import { Button, Link, Spacer, Step } from '../components/index.js';
 
 export default class ImageStep extends React.Component {
@@ -50,9 +50,9 @@ export default class ImageStep extends React.Component {
 export const styles = csjs`
   .input {
     border: none;
-    opacity: 0;
     overflow: hidden;
     position: absolute;
+    width: 0;
     z-index: -1;
   }
 
