@@ -35,7 +35,7 @@
       }
     },
     "deploy": {
-      "command": "npm run clean && npm run compile; push-dir --dir dist --branch gh-pages --cleanup; cat npm-debug.log",
+      "command": "npm run clean && npm run compile; pwd; push-dir --dir dist --branch gh-pages --cleanup; ls .",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
