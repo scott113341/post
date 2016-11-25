@@ -12,6 +12,7 @@ script:
   - npm install -g git-credential-env
   - git config credential.helper "env --username=GIT_USER_NAME"
   - git config user.name "Travis CI"
+  - git config user.email builds@travis-ci.org
   - npm run deploy
 
 notifications:
