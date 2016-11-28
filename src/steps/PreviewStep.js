@@ -14,7 +14,7 @@ export default class PreviewStep extends React.Component {
     const fromAddress = address.addresses[address.selectedFromIndex];
     const toAddress = address.addresses[address.selectedToIndex];
 
-    const scale = 800 / 100 / size.width;
+    const scale = 300 / 100 / size.width;
     const topBottom = -(size.height * 100 - size.height * 100 * scale) / 2;
     const leftRight = -(size.width  * 100 - size.width  * 100 * scale) / 2;
     const styles = csjs`
