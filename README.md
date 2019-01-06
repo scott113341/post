@@ -1,7 +1,6 @@
 # [post][post-href]
 
 [![version][version-badge]][version-href]
-[![build-status][build-status-badge]][build-status-href]
 [![dependencies][dependencies-badge]][dependencies-href]
 [![dev-dependencies][dev-dependencies-badge]][dev-dependencies-href]
 
@@ -20,15 +19,12 @@ Some code things used in `post`:
 * React + Redux
 * [csjs][csjs-href]
 * Babel
-* Travis CI deployment to GitHub Pages
+* Netlify for hosting
 * [Waffle.io][waffle-href] for organization
 
 
 [version-badge]: https://img.shields.io/github/tag/scott113341/post.svg?label=version&style=flat-square
 [version-href]: https://github.com/scott113341/post/tags
-
-[build-status-badge]: https://img.shields.io/travis/scott113341/post.svg?style=flat-square
-[build-status-href]: https://travis-ci.org/scott113341/post
 
 [dependencies-badge]: https://img.shields.io/david/scott113341/post/master.svg?style=flat-square
 [dependencies-href]: https://david-dm.org/scott113341/post/master

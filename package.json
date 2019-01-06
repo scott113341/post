@@ -8,21 +8,16 @@
   "bugs": "https://github.com/scott113341/post/issues",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist",
-    "compile": "better-npm-run compile",
-    "lint": "eslint bin build config server src tests",
-    "lint:fix": "npm run lint -- --fix",
-    "start": "better-npm-run start",
+    "build": "better-npm-run build",
     "dev": "better-npm-run dev",
-    "test": "better-npm-run test",
-    "test:dev": "npm run test -- --watch",
-    "deploy": "better-npm-run deploy",
-    "codecov": "cat coverage/*/lcov.info | codecov"
+    "lint": "eslint bin build config server src tests",
+    "lint:fix": "npm run lint -- --fix"
   },
   "betterScripts": {
-    "compile": {
+    "build": {
       "command": "rimraf dist && node bin/compile",
       "env": {
+        "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
     },
@@ -32,26 +27,6 @@
         "NODE_ENV": "development",
         "DEBUG": "app:*",
         "PORT": 3002
-      }
-    },
-    "deploy": {
-      "command": "npm run clean && npm run compile && push-dir --dir=dist --branch=gh-pages --cleanup --verbose",
-      "env": {
-        "NODE_ENV": "production",
-        "DEBUG": "app:*"
-      }
-    },
-    "start": {
-      "command": "node bin/server",
-      "env": {
-        "DEBUG": "app:*"
-      }
-    },
-    "test": {
-      "command": "node ./node_modules/karma/bin/karma start build/karma.conf",
-      "env": {
-        "NODE_ENV": "test",
-        "DEBUG": "app:*"
       }
     }
   },
@@ -124,7 +99,6 @@
     "mocha": "^3.0.1",
     "nodemon": "^1.10.2",
     "phantomjs-prebuilt": "^2.1.12",
-    "push-dir": "^0.4.1",
     "react-addons-test-utils": "^15.0.0",
     "redbox-react": "^1.2.10",
     "sinon": "^1.17.5",
