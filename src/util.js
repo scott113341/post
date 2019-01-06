@@ -48,8 +48,8 @@ export async function orderPostcard (apiKey, to, from, size, front, back) {
       form.append('from[address_state]', from.addressState);
       form.append('from[address_zip]', from.addressZip);
       form.append('size', size);
-      form.append('front', front);
-      form.append('back', back);
+      form.append('front', new Blob([front], { type: 'text/plain' }), 'front.html');
+      form.append('back', new Blob([back], { type: 'text/plain' }), 'back.html');
 
       var request = new XMLHttpRequest();
       request.addEventListener('load', requestFinished);
