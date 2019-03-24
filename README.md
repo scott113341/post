@@ -20,7 +20,6 @@ Some code things used in `post`:
 * [csjs][csjs-href]
 * Babel
 * Netlify for hosting
-* [Waffle.io][waffle-href] for organization
 
 
 [version-badge]: https://img.shields.io/github/tag/scott113341/post.svg?label=version&style=flat-square
@@ -35,4 +34,3 @@ Some code things used in `post`:
 [post-href]: https://post.scotthardy.me
 [lob-href]: https://lob.com
 [csjs-href]: https://github.com/rtsao/csjs
-[waffle-href]: https://waffle.io/scott113341/post
