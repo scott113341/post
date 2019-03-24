@@ -44,7 +44,7 @@ export default class PreviewStep extends React.Component {
       ),
       r(Spacer),
       r(Link, { to: '/to' }, 'back'),
-      r(Link, { to: '/send' }, 'next')
+      r(Link, { to: '/send' }, 'send')
     );
   }
 
