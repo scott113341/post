@@ -1,4 +1,3 @@
-/* eslint key-spacing:0 spaced-comment:0 */
 const path = require('path');
 const debug = require('debug')('app:config');
 const argv = require('yargs').argv;
@@ -18,7 +17,6 @@ const config = {
   dir_client : 'src',
   dir_dist   : 'dist',
   dir_server : 'server',
-  dir_test   : 'tests',
 
   // ----------------------------------
   // Server Configuration
@@ -72,7 +70,6 @@ Edit at Your Own Risk
 // ------------------------------------
 // Environment
 // ------------------------------------
-// N.B.: globals added here must _also_ be added to .eslintrc
 config.globals = {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.env)

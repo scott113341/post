@@ -153,7 +153,6 @@ webpackConfig.postcss = [
 ];
 
 // File loaders
-/* eslint-disable */
 webpackConfig.module.loaders.push(
   { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
   { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
@@ -163,7 +162,6 @@ webpackConfig.module.loaders.push(
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
   { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
 );
-/* eslint-enable */
 
 // ------------------------------------
 // Finalize Configuration
