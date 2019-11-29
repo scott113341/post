@@ -14,7 +14,7 @@ export default class WelcomeStep extends React.Component {
         r('a', { href: 'https://dashboard.lob.com/#/register', target: '_blank', rel: 'nofollow' }, 'lob account')
       ),
       r(Spacer),
-      r(Link, { to: '/lob-setup' }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('next') }, 'next')
     );
   }
 

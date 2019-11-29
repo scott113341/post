@@ -20,8 +20,8 @@ export default class ImageStep extends React.Component {
       r('input', { className: styles.input, ref: 'file', type: 'file', accept: 'image/*', onChange: this.handleImageLoad.bind(this) }),
       img,
       r(Spacer),
-      r(Link, { to: '/size' }, 'back'),
-      r(Link, { to: '/message', disabled }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
     );
   }
 

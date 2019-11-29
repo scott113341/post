@@ -33,8 +33,8 @@ export default class ToAddressStep extends React.Component {
       modal,
 
       r(Spacer),
-      r(Link, { to: '/from' }, 'back'),
-      r(Link, { to: '/preview', disabled }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
     );
   }
 
@@ -52,7 +52,6 @@ export default class ToAddressStep extends React.Component {
   }
 
   handleClickCancelModal () {
-    console.log('cancel');
     this.props.showNewAddressModal(false);
   }
 

@@ -37,8 +37,8 @@ export default class FromAddressStep extends React.Component {
       modal,
 
       r(Spacer),
-      r(Link, { to: '/message' }, 'back'),
-      r(Link, { to: '/to', disabled }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
     );
   }
 

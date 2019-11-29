@@ -11,8 +11,8 @@ export default class MessageStep extends React.Component {
     return r(Step, { title: 'write message' },
       r('textarea', { className: styles.textarea, value: message.content, onChange: this.handleInputChange.bind(this) }),
       r(Spacer),
-      r(Link, { to: '/image' }, 'back'),
-      r(Link, { to: '/from' }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next') }, 'next')
     );
   }
 

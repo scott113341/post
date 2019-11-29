@@ -193,9 +193,9 @@ export default function postcardReducer (state = initialState, action) {
     }
 
     case GO_TO_STEP: {
-      var stepIndex = state.stepIndex;
+      let stepIndex = state.stepIndex;
       if (action.step === 'next') stepIndex++;
-      else if (action.step === 'previous') stepIndex--;
+      else if (action.step === 'back') stepIndex--;
       else stepIndex = action.step;
       return clone(state, { stepIndex });
     }

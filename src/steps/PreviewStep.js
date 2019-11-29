@@ -43,8 +43,8 @@ export default class PreviewStep extends React.Component {
         r(Button, { onClick: this.handleFlipClick.bind(this) }, 'flip')
       ),
       r(Spacer),
-      r(Link, { to: '/to' }, 'back'),
-      r(Link, { to: '/send' }, 'send')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next') }, 'send')
     );
   }
 

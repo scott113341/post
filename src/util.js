@@ -62,7 +62,7 @@ export async function orderPostcard (apiKey, to, from, size, front, back) {
       }
     }
     catch (e) {
-      console.log('wtfffffffff', e);
+      console.log(e);
     }
   });
 }

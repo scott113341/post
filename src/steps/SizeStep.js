@@ -19,8 +19,8 @@ export default class SizeStep extends React.Component {
       ),
 
       r(Spacer),
-      r(Link, { to: '/lob-setup' }, 'back'),
-      r(Link, { to: '/image', disabled }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
     );
   }
 

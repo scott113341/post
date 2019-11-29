@@ -14,8 +14,8 @@ export default class LobStep extends React.Component {
       r(Input, { value: apiKey, onChange: this.handleApiKeyInputChange.bind(this), autoCapitalize: 'none' }),
 
       r(Spacer),
-      r(Link, { to: '/' }, 'back'),
-      r(Link, { to: '/size', disabled }, 'next')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
     );
   }
 

@@ -1,19 +1,17 @@
 import csjs from 'csjs-inject';
-import React, { createElemet as r } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 import '../static/reset.css';
 import '../styles/global.js';
 
 import { Header } from '../components/index.js';
-import * as postcard from '../store/postcard.js';
 
 export const StepLayout = props => {
   return (
     <div>
       <Header />
       <div className={styles.container}>
-        {React.cloneElement(props.children, props)}
+        {props.children}
       </div>
     </div>
   );
@@ -27,13 +25,4 @@ export const styles = csjs`
   }
 `;
 
-const mapStateToProps = (state) => ({
-  postcard : state.postcard
-});
-
-const postcardActions = Object.keys(postcard).reduce((a, c) => {
-  if (typeof postcard[c] === 'function') return Object.assign(a, { [c]: postcard[c] });
-  return a;
-}, {});
-
-export default connect(mapStateToProps, postcardActions)(StepLayout);
+export default StepLayout;

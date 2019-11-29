@@ -44,8 +44,8 @@ export default class SendStep extends React.Component {
       success,
       error,
       r(Spacer),
-      r(Link, { to: '/preview' }, 'back'),
-      r(Link, { to: '/', disabled }, 'start over')
+      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
+      r(Link, { onClick: () => this.props.goToStep(0), disabled }, 'start over')
     );
   }
 

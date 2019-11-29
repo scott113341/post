@@ -1,13 +1,12 @@
 import classnames from 'classnames';
 import csjs from 'csjs-inject';
 import React, { createElement as r } from 'react';
-import { Link } from 'react-router';
 
 import { buttonBackgroundColor } from '../styles/constants';
 
 const PostLink = ({ disabled, ...rest }) => {
   const className = classnames({ [styles.button]: true, [styles.disabled]: disabled });
-  return r(Link, { className, ...rest });
+  return r('a', { className, ...rest });
 };
 
 const styles = csjs`
