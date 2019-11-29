@@ -21,7 +21,8 @@ export default class SendStep extends React.Component {
     const sizeName = size.name;
 
     const frontData = ReactDomServer.renderToStaticMarkup(renderFront({ image, size }));
-    const backData = ReactDomServer.renderToStaticMarkup(renderBack({ size, message, fromAddress, toAddress }));
+    let backData = ReactDomServer.renderToStaticMarkup(renderBack({ size, message, fromAddress, toAddress }));
+    backData = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${backData}</body></html>`;
     const res = await orderPostcard(apiKey, toAddress, fromAddress, sizeName, frontData, backData);
 
     this.props.changeSendingStatus(false);

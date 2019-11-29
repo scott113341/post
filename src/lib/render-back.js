@@ -1,6 +1,6 @@
 import csjs from 'csjs';
 import getCss from 'csjs/get-css';
-import React, { createElement as r } from 'react';
+import React from 'react';
 
 import resetCss from '../styles/reset-css.js';
 
