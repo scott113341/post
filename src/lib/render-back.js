@@ -115,7 +115,8 @@ function formatAddress (a) {
   return (
     <div>
       <p>{a.addressName}</p>
-      <p>{`${a.addressLine1}${a.addressLine2 ? `\n${a.addressLine2}` : ''}`}</p>
+      <p>{a.addressLine1}</p>
+      {a.addressLine2 ? <p>{a.addressLine2}</p> : null}
       <p>{`${a.addressCity}, ${a.addressState} ${a.addressZip}`}</p>
     </div>
   );
