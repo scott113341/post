@@ -47,6 +47,7 @@ export async function orderPostcard (apiKey, to, from, size, front, back) {
       form.append('from[address_city]', from.addressCity);
       form.append('from[address_state]', from.addressState);
       form.append('from[address_zip]', from.addressZip);
+      form.append('use_type', 'operational');
       form.append('size', size);
       form.append('front', new Blob([front], { type: 'text/plain' }), 'front.html');
       form.append('back', new Blob([back], { type: 'text/plain' }), 'back.html');
