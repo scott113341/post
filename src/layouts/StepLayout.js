@@ -1,7 +1,6 @@
 import csjs from 'csjs-inject';
 import React from 'react';
 
-import '../static/reset.css';
 import '../styles/global.js';
 
 import { Header } from '../components/index.js';

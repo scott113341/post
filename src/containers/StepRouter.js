@@ -1,8 +1,6 @@
-import csjs from 'csjs-inject';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import '../static/reset.css';
 import '../styles/global.js';
 
 import * as postcard from '../store/postcard.js';
