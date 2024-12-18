@@ -26,7 +26,15 @@ export function formatPrice(price) {
   return `$${price.toFixed(2)}`;
 }
 
-export async function orderPostcard(apiKey, to, from, size, front, back) {
+export async function orderPostcard(
+  apiKey,
+  to,
+  from,
+  size,
+  uspsClass,
+  front,
+  back,
+) {
   const LOB_ENDPOINT = "https://api.lob.com/v1/postcards";
 
   return new Promise((resolve) => {
@@ -48,6 +56,7 @@ export async function orderPostcard(apiKey, to, from, size, front, back) {
       form.append("from[address_zip]", from.addressZip);
       form.append("use_type", "operational");
       form.append("size", size);
+      form.append("mail_type", uspsClass);
       form.append("front", new Blob([front], { type: "image/png" }));
       form.append("back", new Blob([back], { type: "image/png" }));
 

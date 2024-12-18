@@ -11,12 +11,11 @@ export default class SendStep extends React.Component {
     this.props.changeSendingStatus(true);
 
     const postcard = this.props.postcard;
-    const { address, image, message, preview } = postcard;
+    const { address, image, message } = postcard;
     const size = postcard.size.sizes[postcard.size.selectedIndex];
     const fromAddress = address.addresses[address.selectedFromIndex];
     const toAddress = address.addresses[address.selectedToIndex];
     const apiKey = postcard.lob.apiKey;
-    const sizeName = size.name;
 
     const frontData = await renderFront({
       image,
@@ -34,7 +33,8 @@ export default class SendStep extends React.Component {
       apiKey,
       toAddress,
       fromAddress,
-      sizeName,
+      size.name,
+      size.uspsClass,
       frontData,
       backData,
     );

@@ -45,7 +45,8 @@ export const POSTCARD_4X6 = (() => {
   return {
     name: "4x6",
     display: `4"x6"`,
-    price: 0.7,
+    price: 0.833,
+    uspsClass: "usps_first_class",
     width,
     height,
     addressWidth,
@@ -69,7 +70,8 @@ export const POSTCARD_6X9 = (() => {
   return {
     name: "6x9",
     display: '6"x9"',
-    price: 1.35,
+    price: 0.954,
+    uspsClass: "usps_first_class",
     width,
     height,
     addressWidth,
@@ -93,7 +95,8 @@ export const POSTCARD_6X11 = (() => {
   return {
     name: "6x11",
     display: '6"x11"',
-    price: 1.5,
+    price: 0.993,
+    uspsClass: "usps_standard",
     width,
     height,
     addressWidth,
