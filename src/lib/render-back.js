@@ -1,123 +1,335 @@
-import csjs from 'csjs';
-import getCss from 'csjs/get-css';
-import React from 'react';
+import React from "react";
+import ReactDomServer from "react-dom/server";
+import { Canvg, presets } from "canvg";
+import {
+  ADDRESS_FONT,
+  ADDRESS_FROM_FONT_SIZE,
+  ADDRESS_FROM_PADDING_TOP,
+  ADDRESS_HEIGHT,
+  ADDRESS_PADDING_LEFT,
+  ADDRESS_TO_FONT_SIZE,
+  ADDRESS_TO_PADDING_TOP,
+  BLEED,
+  POSTAGE_HEIGHT,
+  POSTAGE_WIDTH,
+  TEXT_BLEED,
+} from "../constants";
 
-import resetCss from '../styles/reset-css.js';
+export default async function renderBack({
+  size,
+  message,
+  isPreview,
+  fromAddress = null,
+  toAddress = null,
+  scale = 300,
+}) {
+  const { width, height } = size;
+  const d = (v) => (v * scale).toFixed(6);
 
-export default function renderBack ({ size, message, fromAddress = null, toAddress = null, isPreview = false, scale = 100, ...props }) {
-  const showAddresses = fromAddress && toAddress && isPreview;
-  const d = v => (v * scale).toFixed(6);
-  const px = size.floatBox[0];
-  const py = size.floatBox[1];
+  // Use Canvg to manually calculate what the postcard lines should
+  // be, since SVG can't do text wrapping (well, it can if you use
+  // foreignObject, but we can't use that because we can't render an
+  // image from the Canvas if it contains a foreignObject...
+  const lines = await (async () => {
+    const svg = makeSVG({
+      size,
+      message,
+      lines: [],
+      fromAddress,
+      toAddress,
+      isPreview: true,
+    });
 
-  const styles = csjs`
-    .container {
-      box-sizing: border-box;
-      height: ${d(size.height)}px;
-      padding: ${d(0.2)}px;
-      position: absolute;
-      width: ${d(size.width)}px;
+    // Init SVG canvas
+    const preset = presets.offscreen();
+    const canvas = new OffscreenCanvas(d(width), d(height));
+    const ctx = canvas.getContext("2d");
+    const canvasThing = new Canvg(ctx, svg, preset);
+    await canvasThing.render();
+
+    // States:
+    // - NEW_LINE
+    //   - Word fits => add word
+    //   - Word doesn't fit => add as many characters w/ hyphen
+    //   - No word => done
+    // - EXISTING_LINE
+    //   - Word fits => add word
+    //   - Word doesn't fit
+    //     - Word fits on next line => new line
+    //     - Word won't fit on next line => add as many characters w/ hyphen
+    //   - Space fits => add space
+    //   - Space doesn't fit => drop space
+    //   - No word => done
+    // - DONE
+    //   - Add the final line if it has chars
+
+    const lines = [];
+    let state = "NEW_LINE";
+    let currentLine = "";
+    let nextLine = "";
+
+    const currentLineIndex = () => lines.length;
+
+    const maxWidthForLine = (lineIndex) => {
+      const addressBox = canvasThing.documentElement.children.find(
+        (e) => e.getAttribute("id")?.value === "addressBox",
+      );
+      const addressBoxBB = addressBox.getBoundingBox();
+
+      // The "lowest" this line gets on the page (maximum Y coordinate)
+      const lineMaxY =
+        BLEED + TEXT_BLEED + message.fontSpacing * (lineIndex + 1);
+
+      if (lineMaxY >= addressBoxBB.y1 - TEXT_BLEED) {
+        // Line is far enough down postcard to collide with address box
+        return addressBoxBB.x1 - BLEED - TEXT_BLEED * 1.5;
+      } else {
+        // Line is high enough to not collide with address box
+        return size.width - BLEED - TEXT_BLEED * 2;
+      }
+    };
+
+    const getTextWidth = (text) => {
+      return canvasThing.documentElement.children[0].measureTargetText(
+        ctx,
+        text,
+      );
+    };
+
+    const isLineBreak = (chars) => chars === "\n";
+
+    const charsFit = (chars) => {
+      const testLine = currentLine + chars;
+      const width = getTextWidth(testLine);
+      const maxWidth = maxWidthForLine(currentLineIndex());
+      return width <= maxWidth;
+    };
+
+    const charsFitEntirelyOnNextLine = (chars) => {
+      const width = getTextWidth(chars);
+      const nextLineMaxWidth = maxWidthForLine(currentLineIndex() + 1);
+      return width <= nextLineMaxWidth;
+    };
+
+    const addCharsWithHyphen = (chars) => {
+      const maxWidth = maxWidthForLine(currentLineIndex());
+      let remaining = chars;
+
+      while (true) {
+        const char = remaining.at(0);
+        const newTestLine = currentLine + char + "-";
+        const newTestWidth = getTextWidth(newTestLine);
+
+        if (newTestWidth > maxWidth) {
+          currentLine += "-";
+          break;
+        } else {
+          remaining = remaining.slice(1);
+          currentLine += char;
+        }
+      }
+
+      return remaining;
+    };
+
+    const regex = /\S+|\s/g;
+    const getNextChunk = () => {
+      const chunk = regex.exec(message.content);
+      return chunk === null ? chunk : chunk[0];
+    };
+
+    while (true) {
+      if (state === "NEW_LINE") {
+        const chunk = nextLine.length ? nextLine : getNextChunk();
+        nextLine = "";
+
+        if (chunk === null) {
+          state = "DONE";
+        } else if (isLineBreak(chunk)) {
+          lines.push("");
+          currentLine = "";
+          state = "NEW_LINE";
+        } else if (charsFit(chunk)) {
+          currentLine = chunk;
+          state = "EXISTING_LINE";
+        } else {
+          nextLine = addCharsWithHyphen(chunk);
+          lines.push(currentLine);
+          currentLine = "";
+          state = "NEW_LINE";
+        }
+      } else if (state === "EXISTING_LINE") {
+        const chunk = getNextChunk();
+
+        if (chunk === null) {
+          state = "DONE";
+        } else if (isLineBreak(chunk)) {
+          lines.push(currentLine);
+          currentLine = "";
+          nextLine = "";
+          state = "NEW_LINE";
+        } else if (charsFit(chunk)) {
+          currentLine += chunk;
+          nextLine = "";
+          state = "EXISTING_LINE";
+        } else if (!charsFitEntirelyOnNextLine(chunk)) {
+          nextLine = addCharsWithHyphen(chunk);
+          lines.push(currentLine);
+          currentLine = "";
+          state = "NEW_LINE";
+        } else {
+          lines.push(currentLine);
+          currentLine = "";
+          nextLine = chunk;
+          state = "NEW_LINE";
+        }
+      } else if (state === "DONE") {
+        if (currentLine.length > 0) {
+          lines.push(currentLine);
+        }
+        break;
+      } else {
+        throw "wut";
+      }
     }
 
-    .textContainer {
-      font-family: '${message.font}';
-      font-size: ${d(message.fontSize / 100)}px;
-      height: 100%;
-      overflow: hidden;
-      text-overflow: clip;
-    }
+    return lines;
+  })();
 
-    .floatBox {
-      float: right;
-      height: 100%;
-      shape-outside: polygon(${px}% ${py}%, 100% ${py}%, 100% 100%, ${px}% 100%);
-      -webkit-shape-outside: polygon(${px}% ${py}%, 100% ${py}%, 100% 100%, ${px}% 100%);
-      width: 100%;
-    }
+  const svg = makeSVG({
+    size,
+    message,
+    lines,
+    fromAddress,
+    toAddress,
+    isPreview,
+  });
+  svg.documentElement.setAttribute("width", d(width));
+  svg.documentElement.setAttribute("height", d(height));
 
-    .addressContainer {
-      border: ${d(0.01)}px solid black;
-      display: ${showAddresses ? 'block' : 'none'};
-      font-size: ${d(message.fontSize / 100)}px;
-      height: ${d(size.addressHeight)}px;
-      left: ${d(size.addressLeft)}px;
-      position: absolute;
-      top: ${d(size.addressTop)}px;
-      width: ${d(size.addressWidth)}px;
-    }
-
-    .addressText {
-      font-family: 'Open Sans';
-      position: absolute;
-      text-transform: uppercase;
-    }
-
-    .fromAddress extends .addressText {
-      font-size: ${d(11 / 100)}px;
-      left: ${d(size.addressesLeft)}px;
-      top: ${d(0.266)}px;
-    }
-
-    .toAddress extends .addressText {
-      font-size: ${d(14 / 100)}px;
-      left: ${d(size.addressesLeft)}px;
-      top: ${d(1.339)}px;
-    }
-
-    .postage extends .addressText {
-      background: #aaa;
-      border: ${d(0.01)}px solid black;
-      height: ${d(0.639)}px;
-      left: ${d(size.postageLeft)}px;
-      top: ${d(0.181)}px;
-      text-align: center;
-      width: ${d(0.78)}px;
-    }
-  `;
-
-  const messageText = message.content.split('\n').map((m, i) => <span key={i}>{m}<br/></span>);
-  const fromAddressText = fromAddress ? formatAddress(fromAddress) : '';
-  const toAddressText = toAddress ? formatAddress(toAddress) : '';
-
-  return (
-    <div>
-      <div id="fake"></div>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
-      <style dangerouslySetInnerHTML={{ __html: resetCss }} />
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={d(size.width)}
-        height={d(size.height)}
-        viewBox={`0 0 ${d(size.width)} ${d(size.height)}`}
-        {...props}>
-        <foreignObject width={d(size.width)} height={d(size.height)}>
-          <style dangerouslySetInnerHTML={{ __html: getCss(styles) }} />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <div className={styles.container}>
-              <div className={styles.textContainer}>
-                <div className={styles.floatBox}></div>
-                {messageText}
-              </div>
-              <div className={styles.addressContainer}>
-                <div className={styles.postage}></div>
-                <div className={styles.fromAddress}>{fromAddressText}</div>
-                <div className={styles.toAddress}>{toAddressText}</div>
-              </div>
-            </div>
-          </div>
-        </foreignObject>
-      </svg>
-    </div>
-  );
+  // Render SVG to PNG blob
+  const preset = presets.offscreen();
+  const canvas = new OffscreenCanvas(d(width), d(height));
+  const ctx = canvas.getContext("2d");
+  const canvasThing = new Canvg(ctx, svg, preset);
+  await canvasThing.render();
+  return canvas.convertToBlob();
 }
 
-function formatAddress (a) {
-  return (
-    <div>
-      <p>{a.addressName}</p>
-      <p>{a.addressLine1}</p>
-      {a.addressLine2 ? <p>{a.addressLine2}</p> : null}
-      <p>{`${a.addressCity}, ${a.addressState} ${a.addressZip}`}</p>
-    </div>
+function makeSVG({ size, message, lines, fromAddress, toAddress, isPreview }) {
+  const { width, height } = size;
+
+  // Make SVG in React
+  const startingSvgReact = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={width}
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+    >
+      <text
+        id={"emptyTextForMeasuring"}
+        x={BLEED + TEXT_BLEED}
+        y={BLEED + TEXT_BLEED + message.fontSpacing}
+        fontSize={message.fontSize}
+        fontFamily={message.font}
+      >
+        {" "}
+      </text>
+
+      {lines.map((line, idx) => (
+        <text
+          x={BLEED + TEXT_BLEED}
+          y={BLEED + TEXT_BLEED + message.fontSpacing * (idx + 1)}
+          fontSize={message.fontSize}
+          fontFamily={message.font}
+        >
+          {line}
+        </text>
+      ))}
+
+      {isPreview && (
+        <rect
+          id={"postage"}
+          width={POSTAGE_WIDTH}
+          height={POSTAGE_HEIGHT}
+          x={size.postageLeft}
+          y={size.postageTop}
+          fill="#aaa"
+          stroke="black"
+          strokeWidth={0.01}
+        />
+      )}
+
+      {isPreview && (
+        <rect
+          id={"addressBox"}
+          width={size.addressWidth}
+          height={ADDRESS_HEIGHT}
+          x={size.addressLeft}
+          y={size.addressTop}
+          fill="none"
+          stroke="black"
+          strokeWidth={0.01}
+        />
+      )}
+
+      {isPreview && (
+        <svg
+          x={size.addressLeft + ADDRESS_PADDING_LEFT}
+          y={
+            size.addressTop + ADDRESS_FROM_PADDING_TOP + ADDRESS_FROM_FONT_SIZE
+          }
+          fontSize={ADDRESS_FROM_FONT_SIZE}
+          fontFamily={ADDRESS_FONT}
+        >
+          {formatAddress(fromAddress, ADDRESS_FROM_FONT_SIZE)}
+        </svg>
+      )}
+
+      {isPreview && (
+        <svg
+          x={size.addressLeft + ADDRESS_PADDING_LEFT}
+          y={size.addressTop + ADDRESS_TO_PADDING_TOP + ADDRESS_TO_FONT_SIZE}
+          fontSize={ADDRESS_TO_FONT_SIZE}
+          fontFamily={ADDRESS_FONT}
+        >
+          {formatAddress(toAddress, ADDRESS_TO_FONT_SIZE)}
+        </svg>
+      )}
+    </svg>
   );
+
+  // Convert into SVG string
+  const startingSvgStr =
+    `<?xml version="1.0" encoding="UTF-8"?>` +
+    ReactDomServer.renderToStaticMarkup(startingSvgReact);
+
+  // Parse into SVG document
+  const parser = new DOMParser();
+  return parser.parseFromString(startingSvgStr, "image/svg+xml");
+}
+
+function formatAddress(a, fontSize) {
+  const cityStateZip =
+    `${a.addressCity}, ${a.addressState} ${a.addressZip}`.toUpperCase();
+
+  if (a.addressLine2) {
+    return (
+      <g>
+        <text>{a.addressName.toUpperCase()}</text>
+        <text dy={fontSize}>{a.addressLine1.toUpperCase()}</text>
+        <text dy={fontSize * 2}>{a.addressLine2.toUpperCase()}</text>
+        <text dy={fontSize * 3}>{cityStateZip}</text>
+      </g>
+    );
+  } else {
+    return (
+      <g>
+        <text>{a.addressName.toUpperCase()}</text>
+        <text dy={fontSize}>{a.addressLine1.toUpperCase()}</text>
+        <text dy={fontSize * 2}>{cityStateZip}</text>
+      </g>
+    );
+  }
 }

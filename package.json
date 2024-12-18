@@ -1,6 +1,6 @@
 {
   "name": "post",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Self-contained website to send postcards via the Lob API.",
   "author": "Scott Hardy",
   "repository": "git@github.com:scott113341/post.git",
@@ -35,6 +35,7 @@
     "@babel/preset-react": "^7.25.9",
     "babel-loader": "^9.2.1",
     "better-npm-run": "0.0.11",
+    "canvg": "^4.0.2",
     "classnames": "2.2.5",
     "csjs-inject": "1.0.1",
     "debug": "2.6.9",
@@ -42,6 +43,7 @@
     "fs-extra": "0.30.0",
     "html-webpack-plugin": "^5.6.3",
     "lodash": "^4.17.21",
+    "prettier": "^3.3.3",
     "react": "15.3.2",
     "react-dom": "15.3.2",
     "react-frame-component": "0.6.6",

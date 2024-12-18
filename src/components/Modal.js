@@ -1,33 +1,28 @@
-import React, { createElement as r } from 'react';
-import csjs from 'csjs-inject';
+import React from "react";
+import csjs from "csjs-inject";
 
 export default class Modal extends React.Component {
-
   static propTypes = {
     children: React.PropTypes.node.isRequired,
     onClick: React.PropTypes.func,
-    title: React.PropTypes.string.isRequired
+    title: React.PropTypes.string.isRequired,
   };
 
-  handleClick () {
-    this.props.onClick();
-  }
-
-  render () {
+  render() {
     const { children, title } = this.props;
 
-    return r('div', { className: styles.backdrop },
-      r('div', { className: styles.modal },
-        r('h1', { className: styles.title }, title),
-        children
-      )
+    return (
+      <div className={styles.backdrop}>
+        <div className={styles.modal}>
+          <h1 className={styles.title}>{title}</h1>
+          {children}
+        </div>
+      </div>
     );
   }
-
 }
 
 const styles = csjs`
-
   .backdrop {
     display: flex;
     flex-direction: column;
@@ -58,5 +53,4 @@ const styles = csjs`
     border-bottom: 1px solid gray;
     margin-bottom: 12px;
   }
-
 `;

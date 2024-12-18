@@ -1,21 +1,20 @@
-import React, { createElement as r } from 'react';
-import csjs from 'csjs-inject';
+import React from "react";
+import csjs from "csjs-inject";
 
 export default class Spinner extends React.Component {
-
-  render () {
-    return r('div', { className: styles.spinner },
-      r('div', { className: styles.bar1 }),
-      r('div', { className: styles.bar2 }),
-      r('div', { className: styles.bar3 }),
-      r('div', { className: styles.bar4 })
+  render() {
+    return (
+      <div className={styles.spinner}>
+        <div className={styles.bar1}></div>
+        <div className={styles.bar2}></div>
+        <div className={styles.bar3}></div>
+        <div className={styles.bar4}></div>
+      </div>
     );
   }
-
 }
 
 const styles = csjs`
-
   .spinner {
     margin: 0 auto;
     width: 70px;
@@ -55,5 +54,4 @@ const styles = csjs`
       transform: scale(1.0);
     }
   }
-
 `;

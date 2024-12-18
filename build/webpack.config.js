@@ -1,12 +1,10 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
-
-const config = require('../config');
-
-const paths = config.utils_paths;
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: './src/main.js',
+  entry: "./src/index.js",
+  mode: process.env.NODE_ENV || "development",
+  watch: true,
+  devtool: "eval-cheap-module-source-map",
   module: {
     rules: [
       {
@@ -15,15 +13,15 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
-      }
-    ]
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: "./src/index.html",
     }),
   ],
 };

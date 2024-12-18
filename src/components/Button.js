@@ -1,11 +1,9 @@
-import React, { createElement as r } from 'react';
-import csjs from 'csjs-inject';
+import React from "react";
+import csjs from "csjs-inject";
 
-import { buttonBackgroundColor } from '../styles/constants';
+import { buttonBackgroundColor } from "../styles/constants";
 
-const Button = props => (
-  r('button', { className: styles.button, ...props })
-);
+const Button = (props) => <button className={styles.button} {...props} />;
 
 const styles = csjs`
   .button {
