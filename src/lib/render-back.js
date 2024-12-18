@@ -85,7 +85,7 @@ export default async function renderBack({
         return addressBoxBB.x1 - BLEED - TEXT_BLEED * 1.5;
       } else {
         // Line is high enough to not collide with address box
-        return size.width - BLEED - TEXT_BLEED * 2;
+        return size.width - BLEED * 2 - TEXT_BLEED * 2;
       }
     };
 
