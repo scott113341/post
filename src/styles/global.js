@@ -1,9 +1,8 @@
-import csjs from 'csjs-inject';
+import csjs from "csjs-inject";
 
-import * as c from './constants.js';
+import * as c from "./constants.js";
 
 export default csjs`
-
   html {
     font-family: ${c.font};
     font-size: ${c.fontSize};
@@ -25,5 +24,4 @@ export default csjs`
   a, a:visited {
     color: ${c.linkColor};
   }
-
 `;

@@ -1,69 +1,84 @@
-import csjs from 'csjs-inject';
-import React, { createElement as r } from 'react';
-import ReactDomServer from 'react-dom/server';
+import csjs from "csjs-inject";
+import React from "react";
 
-import { orderPostcard } from '../util.js';
-import { Link, Spacer, Spinner, Step } from '../components/index.js';
-import renderBack from '../lib/render-back';
-import renderFront from '../lib/render-front';
+import { orderPostcard } from "../util.js";
+import { Link, Spacer, Spinner, Step } from "../components/index.js";
+import renderBack from "../lib/render-back";
+import renderFront from "../lib/render-front";
 
 export default class SendStep extends React.Component {
-
-  async componentDidMount () {
+  async componentDidMount() {
     this.props.changeSendingStatus(true);
 
     const postcard = this.props.postcard;
-    const { address, image, message, preview  } = postcard;
+    const { address, image, message, preview } = postcard;
     const size = postcard.size.sizes[postcard.size.selectedIndex];
     const fromAddress = address.addresses[address.selectedFromIndex];
     const toAddress = address.addresses[address.selectedToIndex];
     const apiKey = postcard.lob.apiKey;
     const sizeName = size.name;
 
-    const frontData = ReactDomServer.renderToStaticMarkup(renderFront({ image, size }));
-    let backData = ReactDomServer.renderToStaticMarkup(renderBack({ size, message, fromAddress, toAddress }));
-    backData = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${backData}</body></html>`;
-    const res = await orderPostcard(apiKey, toAddress, fromAddress, sizeName, frontData, backData);
+    const frontData = await renderFront({
+      image,
+      size,
+      isPreview: false,
+    });
+    const backData = await renderBack({
+      size,
+      message,
+      fromAddress,
+      toAddress,
+      isPreview: false,
+    });
+    const res = await orderPostcard(
+      apiKey,
+      toAddress,
+      fromAddress,
+      sizeName,
+      frontData,
+      backData,
+    );
 
     this.props.changeSendingStatus(false);
     this.props.changeSentStatus(true);
-    if (res.status === 200) this.props.changeResponseStatus('');
+    if (res.status === 200) this.props.changeResponseStatus("");
     else this.props.changeResponseStatus(res.responseText);
   }
 
-  render () {
+  render() {
     const send = this.props.postcard.send;
     const disabled = !this.isValid();
 
-    const spinner = send.isSending ? r(Spinner) : null;
-    const success = this.didSucceed() ? r('p', { className: styles.success }, 'success') : null;
-    const error = this.didError() ? r('pre', { className: styles.error }, send.response) : null;
-
-    return r(Step, { title: 'sending postcard' },
-      r(Spacer, { height: '15px' }),
-      spinner,
-      success,
-      error,
-      r(Spacer),
-      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
-      r(Link, { onClick: () => this.props.goToStep(0), disabled }, 'start over')
+    return (
+      <Step title="sending postcard">
+        <Spacer height="15px" />
+        {send.isSending ? <Spinner /> : null}
+        {this.didSucceed() ? <p className={styles.success}>success</p> : null}
+        {this.didError() ? (
+          <pre className={styles.error}>{send.response}</pre>
+        ) : null}
+        <Spacer />
+        <Link onClick={() => this.props.goToStep("back")}>back</Link>
+        <Link onClick={() => this.props.goToStep(0)} disabled={disabled}>
+          start over
+        </Link>
+      </Step>
     );
   }
 
-  didSucceed () {
+  didSucceed() {
     const send = this.props.postcard.send;
     return !send.isSending && send.didSend && !send.response.length;
   }
 
-  didError () {
+  didError() {
     const send = this.props.postcard.send;
     return !send.isSending && send.didSend && send.response.length;
   }
 
-  isValid () {
+  isValid() {
     return this.didSucceed();
   }
-
 }
 
 export const styles = csjs`

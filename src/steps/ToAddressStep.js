@@ -1,65 +1,80 @@
-import React, { createElement as r } from 'react';
+import React from "react";
 
-import { Cell, Link, NewAddressModal, Spacer, Step } from '../components/index.js';
+import {
+  Cell,
+  Link,
+  NewAddressModal,
+  Spacer,
+  Step,
+} from "../components/index.js";
 
 export default class ToAddressStep extends React.Component {
-
-  render () {
+  render() {
     const address = this.props.postcard.address;
     const disabled = !this.isValid();
 
-    const modal = r(NewAddressModal, {
-      show: address.showModal,
-      onCancel: this.handleClickCancelModal.bind(this),
-      onSave: this.handleClickSaveModal.bind(this)
-    });
+    const modal = (
+      <NewAddressModal
+        show={address.showModal}
+        onCancel={this.handleClickCancelModal}
+        onSave={this.handleClickSaveModal}
+      />
+    );
 
-    return r(Step, { title: 'to address' },
+    return (
+      <Step title="to address">
+        {address.addresses.map((addressOption, index) => {
+          const selected = index === address.selectedToIndex;
+          return (
+            <Cell
+              key={index}
+              onClick={() => this.handleClickAddress(index)}
+              selected={selected}
+            >
+              <p>{addressOption.addressName}</p>
+              <p>{addressOption.addressLine1}</p>
+              <p>{addressOption.addressLine2}</p>
+              <p>{`${addressOption.addressCity}, ${addressOption.addressState} ${addressOption.addressZip}`}</p>
+            </Cell>
+          );
+        })}
 
-      address.addresses.map((addressOption, index) => {
-        const selected = index === address.selectedToIndex;
-        return r(Cell, { key: index, onClick: this.handleClickAddress.bind(this, index), selected },
-          r('p', null, addressOption.addressName),
-          r('p', null, addressOption.addressLine1),
-          r('p', null, addressOption.addressLine2),
-          r('p', null, `${addressOption.addressCity}, ${addressOption.addressState} ${addressOption.addressZip}`)
-        );
-      }),
+        <Cell onClick={this.handleClickNewAddress} last>
+          <p>new address</p>
+        </Cell>
 
-      r(Cell, { onClick: this.handleClickNewAddress.bind(this), last: true },
-        r('p', null, 'new address')
-      ),
+        {modal}
 
-      modal,
-
-      r(Spacer),
-      r(Link, { onClick: () => this.props.goToStep('back') }, 'back'),
-      r(Link, { onClick: () => this.props.goToStep('next'), disabled }, 'next')
+        <Spacer />
+        <Link onClick={() => this.props.goToStep("back")}>back</Link>
+        <Link onClick={() => this.props.goToStep("next")} disabled={disabled}>
+          next
+        </Link>
+      </Step>
     );
   }
 
-  isValid () {
+  isValid() {
     return this.props.postcard.address.selectedToIndex >= 0;
   }
 
-  handleClickAddress (index) {
-    this.props.changeSelectedAddress('to', index);
-  }
+  handleClickAddress = (index) => {
+    this.props.changeSelectedAddress("to", index);
+  };
 
-  handleClickNewAddress () {
-    this.props.changeSelectedAddress('to', -1);
+  handleClickNewAddress = () => {
+    this.props.changeSelectedAddress("to", -1);
     this.props.showNewAddressModal(true);
-  }
+  };
 
-  handleClickCancelModal () {
+  handleClickCancelModal = () => {
     this.props.showNewAddressModal(false);
-  }
+  };
 
-  handleClickSaveModal (address) {
+  handleClickSaveModal = (address) => {
     this.props.addAddress(address);
     const newAddressIndex = this.props.postcard.address.addresses.length;
-    this.props.changeSelectedAddress('to', newAddressIndex);
+    this.props.changeSelectedAddress("to", newAddressIndex);
     this.props.showNewAddressModal(false);
-  }
-
+  };
 }

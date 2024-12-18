@@ -1,26 +1,25 @@
-import React, { createElement as r } from 'react';
-import csjs from 'csjs-inject';
+import React from "react";
+import csjs from "csjs-inject";
 
 export default class Step extends React.Component {
-
   static propTypes = {
     title: React.PropTypes.string.isRequired,
-    children: React.PropTypes.node.isRequired
+    children: React.PropTypes.node.isRequired,
   };
 
-  render () {
+  render() {
     const { title, children } = this.props;
 
-    return r('div', { className: styles.container },
-      r('h1', { className: styles.title }, title),
-      children
+    return (
+      <div className={styles.container}>
+        <h1 className={styles.title}>{title}</h1>
+        {children}
+      </div>
     );
   }
-
 }
 
 const styles = csjs`
-
   .container {
     text-align: center;
   }
@@ -30,5 +29,4 @@ const styles = csjs`
     font-size: 22px;
     font-weight: 300;
   }
-
 `;

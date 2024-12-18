@@ -1,12 +1,15 @@
-import classnames from 'classnames';
-import csjs from 'csjs-inject';
-import React, { createElement as r } from 'react';
+import classnames from "classnames";
+import csjs from "csjs-inject";
+import React from "react";
 
-import { buttonBackgroundColor } from '../styles/constants';
+import { buttonBackgroundColor } from "../styles/constants";
 
 const PostLink = ({ disabled, ...rest }) => {
-  const className = classnames({ [styles.button]: true, [styles.disabled]: disabled });
-  return r('a', { className, ...rest });
+  const className = classnames({
+    [styles.button]: true,
+    [styles.disabled]: disabled,
+  });
+  return <a className={className} {...rest} />;
 };
 
 const styles = csjs`

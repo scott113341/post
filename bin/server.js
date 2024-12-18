@@ -1,7 +1,14 @@
-const config = require('../config');
-const server = require('../server/main');
-const debug = require('debug')('app:bin:server');
-const port = config.server_port;
+const express = require("express");
+const webpack = require("webpack");
+const WebpackDevMiddleware = require("webpack-dev-middleware");
 
-server.listen(port);
-debug(`Server is now running at http://localhost:${port}.`);
+const port = process.env.PORT || 3000;
+const webpackConfig = require("../build/webpack.config");
+const compiler = webpack(webpackConfig);
+
+const app = express();
+app.use(WebpackDevMiddleware(compiler));
+app.use(express.static("./dist"));
+
+app.listen(port);
+console.log(`Server is now running at http://localhost:${port}.`);

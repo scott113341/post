@@ -1,20 +1,19 @@
-import React, { createElement as r } from 'react';
-import csjs from 'csjs-inject';
+import React from "react";
+import csjs from "csjs-inject";
 
-import { headerBackgroundColor } from '../styles/constants';
+import { headerBackgroundColor } from "../styles/constants";
 
 export default class Header extends React.Component {
-
-  render () {
-    return r('header', { className: styles.header },
-      r('h1', { className: styles.text }, 'post')
+  render() {
+    return (
+      <header className={styles.header}>
+        <h1 className={styles.text}>post</h1>
+      </header>
     );
   }
-
 }
 
 const styles = csjs`
-
   .header {
     padding: 5px 0;
     background: ${headerBackgroundColor};
@@ -25,5 +24,4 @@ const styles = csjs`
     text-align: center;
     color: white;
   }
-
 `;
