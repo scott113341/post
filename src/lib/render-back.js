@@ -275,27 +275,23 @@ function makeSVG({ size, message, lines, fromAddress, toAddress, isPreview }) {
       )}
 
       {isPreview && (
-        <svg
-          x={size.addressLeft + ADDRESS_PADDING_LEFT}
-          y={
-            size.addressTop + ADDRESS_FROM_PADDING_TOP + ADDRESS_FROM_FONT_SIZE
-          }
+        <g
+          transform={`translate(${size.addressLeft + ADDRESS_PADDING_LEFT}, ${size.addressTop + ADDRESS_FROM_PADDING_TOP + ADDRESS_FROM_FONT_SIZE})`}
           fontSize={ADDRESS_FROM_FONT_SIZE}
           fontFamily={ADDRESS_FONT}
         >
           {formatAddress(fromAddress, ADDRESS_FROM_FONT_SIZE)}
-        </svg>
+        </g>
       )}
 
       {isPreview && (
-        <svg
-          x={size.addressLeft + ADDRESS_PADDING_LEFT}
-          y={size.addressTop + ADDRESS_TO_PADDING_TOP + ADDRESS_TO_FONT_SIZE}
+        <g
+          transform={`translate(${size.addressLeft + ADDRESS_PADDING_LEFT}, ${size.addressTop + ADDRESS_TO_PADDING_TOP + ADDRESS_TO_FONT_SIZE})`}
           fontSize={ADDRESS_TO_FONT_SIZE}
           fontFamily={ADDRESS_FONT}
         >
           {formatAddress(toAddress, ADDRESS_TO_FONT_SIZE)}
-        </svg>
+        </g>
       )}
     </svg>
   );
