@@ -61,14 +61,10 @@ export async function orderPostcard(
       form.append("back", new Blob([back], { type: "image/png" }));
 
       const request = new XMLHttpRequest();
-      request.addEventListener("load", requestFinished);
+      request.addEventListener("load", (e) => resolve(e.target));
       request.open("POST", LOB_ENDPOINT, true);
       request.setRequestHeader("Authorization", `Basic ${btoa(apiKey + ":")}`);
       request.send(form);
-
-      function requestFinished(e) {
-        resolve(e.target);
-      }
     } catch (e) {
       console.log(e);
     }
@@ -77,27 +73,16 @@ export async function orderPostcard(
 
 export async function loadImageFromData(data) {
   return new Promise((resolve) => {
-    var img = new Image();
+    const img = new Image();
     img.src = data;
     img.onload = () => resolve(img);
   });
 }
 
 export function loadFileAsDataUrl(file) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
     reader.readAsDataURL(file);
   });
-}
-
-export function promisify(fn, thisArg = null) {
-  return (...args) => {
-    return new Promise((resolve, reject) => {
-      fn.call(thisArg, ...args, (err, data) => {
-        if (err) return reject(err);
-        return resolve(data);
-      });
-    });
-  };
 }

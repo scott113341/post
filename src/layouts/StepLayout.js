@@ -1,17 +1,15 @@
-import csjs from 'csjs-inject';
-import React from 'react';
+import csjs from "csjs-inject";
+import React from "react";
 
-import '../styles/global.js';
+import "../styles/global.js";
 
-import { Header } from '../components/index.js';
+import { Header } from "../components/index.js";
 
-export const StepLayout = props => {
+export const StepLayout = (props) => {
   return (
     <div>
       <Header />
-      <div className={styles.container}>
-        {props.children}
-      </div>
+      <div className={styles.container}>{props.children}</div>
     </div>
   );
 };
