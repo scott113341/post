@@ -1,0 +1,16 @@
+name: Build + deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    uses: scott113341/workflows/.github/workflows/build-deploy.yaml@main
+    with:
+      registry: registry.they.industries
+      repository: post
+    secrets:
+      registry-user: ${{ secrets.REGISTRY_USER }}
+      registry-password: ${{ secrets.REGISTRY_PASSWORD }}

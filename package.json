@@ -13,7 +13,7 @@
   },
   "betterScripts": {
     "build": {
-      "command": "rimraf dist && node bin/compile",
+      "command": "rimraf dist && node bin/compile.js",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
