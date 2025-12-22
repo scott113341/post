@@ -52,7 +52,7 @@
     "redux-thunk": "2.1.0",
     "rimraf": "2.5.4",
     "webpack": "^5.96.1",
-    "webpack-dev-middleware": "^7.4.2",
+    "webpack-dev-middleware": "^7.4.5",
     "yargs": "6.3.0"
   }
 }
