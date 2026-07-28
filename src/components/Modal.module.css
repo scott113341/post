@@ -1,0 +1,19 @@
+.modal {
+  box-sizing: border-box;
+  margin: auto;
+  padding: 10px;
+  width: 90%;
+  max-width: 500px;
+  border: none;
+  background: white;
+}
+
+.modal::backdrop {
+  background: rgb(0 0 0 / 0.8);
+}
+
+.title {
+  padding-bottom: 5px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid gray;
+}

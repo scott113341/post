@@ -1,0 +1,17 @@
+.input {
+  position: absolute;
+  width: 0;
+  border: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.image {
+  margin: 0 auto;
+  max-height: 300px;
+  max-width: 100%;
+}
+
+.error {
+  color: var(--color-button);
+}

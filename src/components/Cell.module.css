@@ -1,0 +1,25 @@
+.cell {
+  padding: 10px;
+  border: 1px solid black;
+  /* Cells stack directly against each other, so only the last draws a bottom
+     edge. The old component took a `last` prop to do the same thing. */
+  border-bottom: none;
+}
+
+.last {
+  border-bottom: 1px solid black;
+}
+
+.selected {
+  background: var(--color-selected);
+}
+
+/* The whole cell body is the select target, but it has to be its own button so
+   the delete action can sit alongside it without nesting buttons. */
+.select {
+  display: block;
+  width: 100%;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+}

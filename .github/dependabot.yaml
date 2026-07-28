@@ -13,7 +13,7 @@ updates:
       day: "monday"
       time: "10:00"
   - package-ecosystem: "github-actions"
-    directory: "/.github/workflows"
+    directory: "/"
     schedule:
       interval: "weekly"
       day: "monday"

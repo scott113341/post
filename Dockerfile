@@ -1,13 +1,15 @@
-FROM node:latest AS builder
+# syntax=docker/dockerfile:1
+FROM node:24-alpine AS builder
 WORKDIR /app
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
-COPY /bin ./bin
-COPY /build ./build
-COPY /config ./config
-COPY /src ./src
-COPY /babel.config.json ./
-RUN yarn run build
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY scripts ./scripts
+COPY src ./src
+COPY public ./public
+COPY index.html tsconfig.json ./
+RUN npm run build
 
 FROM ghcr.io/static-web-server/static-web-server:2
 COPY --from=builder /app/dist /public

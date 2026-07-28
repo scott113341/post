@@ -1,0 +1,10 @@
+.input {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 30px;
+}
