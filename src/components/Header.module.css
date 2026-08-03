@@ -1,0 +1,10 @@
+.header {
+  padding: 5px 0;
+  background: var(--color-header);
+}
+
+.text {
+  font-size: 18px;
+  text-align: center;
+  color: white;
+}

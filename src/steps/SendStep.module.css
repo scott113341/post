@@ -1,0 +1,13 @@
+.success {
+  color: var(--color-success);
+}
+
+.error {
+  padding: 5px;
+  background: var(--color-error-bg);
+  font-family: monospace;
+  font-size: 12px;
+  text-align: left;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}

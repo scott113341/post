@@ -1,0 +1,38 @@
+@import "./reset.css";
+
+:root {
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-size: 18px;
+
+  --color-header: #3877b0;
+  --color-button: #ed000d;
+  --color-button-disabled: gray;
+  --color-link: teal;
+  --color-selected: darkseagreen;
+  --color-border: #ddd;
+  --color-error-bg: #ddd;
+  --color-success: green;
+}
+
+html {
+  font-family: var(--font-sans);
+  font-size: var(--font-size);
+}
+
+input,
+textarea {
+  border: 1px solid var(--color-border);
+  font-size: var(--font-size);
+  text-align: center;
+  width: 100%;
+}
+
+select {
+  font-size: var(--font-size);
+  border-color: inherit;
+}
+
+a,
+a:visited {
+  color: var(--color-link);
+}

@@ -1,0 +1,7 @@
+.textarea {
+  box-sizing: border-box;
+  height: 200px;
+  width: 100%;
+  text-align: left;
+  padding: 6px;
+}
