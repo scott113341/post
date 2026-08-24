@@ -8,8 +8,8 @@ import { setPreviewSide } from "../store/postcard-slice.ts";
 import styles from "./PreviewStep.module.css";
 
 interface Renders {
-  front: Blob;
-  back: Blob;
+  front: string;
+  back: string;
 }
 
 export default function PreviewStep() {
@@ -22,15 +22,17 @@ export default function PreviewStep() {
   const toAddress = address.addresses[address.selectedToIndex] ?? null;
 
   const [renders, setRenders] = useState<Renders | null>(null);
-  const [url, setUrl] = useState("");
   const [error, setError] = useState("");
 
   // Rasterising both sides. This used to run in the constructor, which fired
-  // before mount and could not be cancelled.
+  // before mount and could not be cancelled. Object URLs for both sides are
+  // minted here so the cleanup can revoke exactly what it created; the
+  // displayed one is chosen during render. The old version never revoked them.
   useEffect(() => {
     if (!image) return;
 
     let cancelled = false;
+    let objectUrls: Renders | null = null;
 
     void (async () => {
       try {
@@ -44,7 +46,13 @@ export default function PreviewStep() {
             isPreview: true,
           }),
         ]);
-        if (!cancelled) setRenders({ front, back });
+        if (!cancelled) {
+          objectUrls = {
+            front: URL.createObjectURL(front),
+            back: URL.createObjectURL(back),
+          };
+          setRenders(objectUrls);
+        }
       } catch (cause) {
         if (!cancelled) {
           setError(cause instanceof Error ? cause.message : String(cause));
@@ -54,19 +62,14 @@ export default function PreviewStep() {
 
     return () => {
       cancelled = true;
+      if (objectUrls) {
+        URL.revokeObjectURL(objectUrls.front);
+        URL.revokeObjectURL(objectUrls.back);
+      }
     };
   }, [image, size, message, fromAddress, toAddress]);
 
-  // Object URLs are minted per displayed side so the cleanup can revoke
-  // exactly what it created. The old version never revoked them at all.
-  useEffect(() => {
-    if (!renders) return;
-
-    const objectUrl = URL.createObjectURL(preview.side === "front" ? renders.front : renders.back);
-    setUrl(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [renders, preview.side]);
+  const url = renders ? (preview.side === "front" ? renders.front : renders.back) : "";
 
   if (error) {
     return (
