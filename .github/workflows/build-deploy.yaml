@@ -6,7 +6,11 @@ on:
       - main
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yaml
+
   build-deploy:
+    needs: test
     uses: scott113341/workflows/.github/workflows/build-deploy.yaml@main
     with:
       registry: registry.they.industries
