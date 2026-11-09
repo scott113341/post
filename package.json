@@ -31,7 +31,7 @@
     "@types/react-dom": "^19.3.0",
     "esbuild": "^0.28.2",
     "oxfmt": "^0.76.0",
-    "oxlint": "^1.91.0",
+    "oxlint": "^1.92.0",
     "typescript": "^7.0.2"
   },
   "engines": {
